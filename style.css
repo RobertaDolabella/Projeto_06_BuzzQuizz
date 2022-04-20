@@ -137,7 +137,75 @@ h2{
 /* fim tela 1 */
 
 /*-- tela 2 conteudo quiz */
+.conteudo {
+    padding-top: 70px;
+    display:flex;
+    align-items: center;
+    background-color: #E5E5E5;
+    flex-direction: column;
+}
+.centralizar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.banner {
+    width: 100%;
+    height: 226px;
+    background-color: green;
+}
 
+.banner .titulo {
+    font-family: roboto;
+    font-size: 30px;
+    color: #FFFFFF;
+} 
+/*-- perguntas tela 2 */
+.perguntas-opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.perguntas-opcoes ul {
+    margin-bottom: 20px;
+    margin-right: 16px;  
+}
+
+.perguntas-opcoes img {
+    width: 330px;
+    height: 176px;
+    object-fit: cover;
+}
+
+.perguntas-opcoes .resposta {
+    font-family: roboto;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 8px;
+}
+
+.pergunta_1,
+.pergunta_2,
+.pergunta_3
+{
+    width: 760px;
+    height: 676px;
+    background-color: #FFFFFF;
+    margin: 42px 0;
+    padding: 28px 34px;
+}
+
+.titulo-pergunta {
+    width: 688px;
+    height: 138px;
+    background-color: #434CA0;
+    font-family: roboto;
+    font-size: 23px;
+    font-weight: bold;
+    color: #FFFFFF;    
+}
 
 
 /*-- fim tela 2 conteudo quiz */
