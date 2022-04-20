@@ -28,26 +28,46 @@
                 </button>
             </div>
             <!-- class off para esconder -->
-
-        </div>
-        <div class="criacao">
-            <!--colocar aqui os quizzes criados  -->
-        </div>
-    </div>
-    <div class="container-quizzes">
-        <div class="quizzes">
-            <h2>Todos os Quizzes</h2>
-            <div class="quizzes-prontos">
-
+            <div class="criacao">
+                <!--colocar aqui os quizzes criados  -->
             </div>
         </div>
-    </div>
+        <div class="container-quizzes">
+            <div class="quizzes">
+                <h2>Todos os Quizzes</h2>
+                <div class="quizzes-prontos">
+
+                </div>
+            </div>
+        </div>
     </div>
     <!--tela comece pelo começo -->
     <div class="comece-pelo-comeco off">
         <div class="container-criacao">
-            <h2>Comece pelo começo</h2>
+            <div class="titulo-criacao">
+                <h2>Comece pelo começo</h2>
+            </div>
+            <div class="container-input">
+                <input class="titulo" type="text" placeholder="Título do seu quizz">
+                <input class="imagem" type="text" placeholder="URL da imagem do seu quizz">
+                <input class="quantPerguntas" type="text" placeholder="Quantidade de perguntas do quizz">
+                <input class="quantNiveis" type="text" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <button class="botao-prosseguir" onclick="prosseguirParaPerguntas(this)">Prosseguir pra criar
+                perguntas</button>
         </div>
+    </div>
+    <div class="perguntas off">
+        <div class="container-criacao">
+            <div class="titulo-criacao">
+                <h2>Crie suas perguntas</h2>
+            </div>
+            <div class="container-perguntas">
+
+            </div>
+
+        </div>
+        <button class="botao-prosseguir" onclick="">Prosseguir pra criar níveis</button>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="java.js"></script>
