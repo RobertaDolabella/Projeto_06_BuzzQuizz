@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BuzzQuizz</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
-    <h1>Ahhhh</h1>
+    <div class="topo">
+        <h1>BuzzQuizz</h1>
+    </div>
+    <div class="container-principal">
+        <div class="botao-criacao">
+            <h3>Você não criou nenhum <br>quizz ainda :( </h3>
+            <button onclick="sumirBotao()">Criar Quizz</button>
+        </div>
+        <div class="container-quizzes-criacao off">
+            <div class="criacao-adicionar">
+                <h2>Seus Quizzes</h2>
+                <button>
+                    <ion-icon name="add-circle"></ion-icon>
+                </button>
+            </div>
+            <!-- class off para esconder -->
+
+        </div>
+        <div class="criacao">
+            <!--colocar aqui os quizzes criados  -->
+        </div>
+    </div>
+    <div class="container-quizzes">
+        <div class="quizzes">
+            <h2>Todos os Quizzes</h2>
+            <div class="quizzes-prontos">
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--tela comece pelo começo -->
+    <div class="comece-pelo-comeco off">
+        <div class="container-criacao">
+            <h2>Comece pelo começo</h2>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="java.js"></script>
 </body>
+
 </html>
+<!--  -->
