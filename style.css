@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
+* {
+    box-sizing: border-box;
+}     
+
+
 .topo {
     position: fixed;
     top: 0px;
@@ -101,6 +106,43 @@ h2{
 .off {
     display: none;
 }
+/* tela 1 com quizzes prontos */
+.quizzes-prontos {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.quizzes-prontos .quiz {
+    margin-bottom: 12px;
+    margin-right: 16px;
+}
+
+.quizzes-prontos .quiz img {
+    width: 340px;
+    height: 182px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+/*posicionar titulo em relação a imagem*/
+.quizzes-prontos .quiz .titulo {
+    font-family: roboto;
+    font-size: 19px;
+    line-height: 22px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    background-color: green;
+    width: 300px;
+}
+/* fim tela 1 */
+
+/*-- tela 2 conteudo quiz */
+
+
+
+/*-- fim tela 2 conteudo quiz */
+
+
 .container-criacao{
     width: 88%;
     margin: 0 auto;
