@@ -9,7 +9,8 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    background-color: red;
+    background-color: #EC362D;
+    opacity: 100%;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
@@ -21,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .botao-criacao {
@@ -138,7 +140,7 @@ h2{
 
 /*-- tela 2 conteudo quiz */
 .conteudo {
-    padding-top: 70px;
+    margin-top: 70px;
     display:flex;
     align-items: center;
     background-color: #E5E5E5;
@@ -152,33 +154,50 @@ h2{
 .banner {
     width: 100%;
     height: 226px;
-    background-color: green;
+    background-color: #000000;
+    overflow: hidden;
+    position: relative;
+}
+.banner img {
+    width: 100%;
+    opacity: 60%;
 }
 
 .banner .titulo {
     font-family: roboto;
     font-size: 30px;
     color: #FFFFFF;
+    position: absolute;
 } 
 /*-- perguntas tela 2 */
-.perguntas-opcoes {
+.titulo-pergunta {
+    width: 100%;
+    height: 26%;
+    background-color: #434CA0;
+    font-family: roboto;
+    font-size: 23px;
+    font-weight: bold;
+    color: #FFFFFF;    
+}
+
+.alternativas {
     display: flex;
     flex-wrap: wrap;
     margin: 20px 0;
+    justify-content: space-between;
 }
 
-.perguntas-opcoes ul {
-    margin-bottom: 20px;
-    margin-right: 16px;  
+.alternativas ul {
+    margin-bottom: 20px;        
 }
 
-.perguntas-opcoes img {
+.alternativas img {
     width: 330px;
     height: 176px;
     object-fit: cover;
 }
 
-.perguntas-opcoes .resposta {
+.alternativas .resposta {
     font-family: roboto;
     font-size: 20px;
     font-weight: bold;
@@ -197,17 +216,57 @@ h2{
     padding: 28px 34px;
 }
 
-.titulo-pergunta {
-    width: 688px;
-    height: 138px;
-    background-color: #434CA0;
+/* selecao de respostas */
+.alternativas .correta h1{
+    color: #009C22;
+}
+
+.alternativas .errada h1 {
+    color: #FF4B4B;
+    opacity: 30%;
+}
+.alternativas .errada {
+    opacity: 30%;   
+}
+
+/* resultado */
+.resultado {
+   width: 760px;
+   height: 440px;
+   background-color: #FFFFFF;
+   margin: 42px 0;
+   padding: 18px;
+}
+
+.titulo-resultado {
+    width: 95%;
+    height: 26%;
+    background-color: #EC362D;
     font-family: roboto;
     font-size: 23px;
     font-weight: bold;
-    color: #FFFFFF;    
+    color: #FFFFFF;
 }
 
+.informações-resultado {
+    display: flex;
+    margin-top: 18px;
+}
 
+.resultado img {
+    width: 364px;
+    height: 273px;
+    margin-right: 18px;
+}
+
+.resultado .mensagem {
+    font-size: 19px;
+    font-weight: bold;
+    font-family: roboto;
+    line-height: 25px;
+    color: #484848;
+    margin-right: 30px;
+}
 /*-- fim tela 2 conteudo quiz */
 
 
