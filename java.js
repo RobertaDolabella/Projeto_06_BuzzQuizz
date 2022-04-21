@@ -38,7 +38,7 @@ function gerarInputdePerguntas(){
             <h3>Pergunta1 </h3>
             <button class="off" onclick="abreFecha(this)" ><ion-icon name="create"></ion-icon></button>
         </div>
-        <div class="conteudo on">
+        <div class="conteudoCriacao on">
             <div class="pergunta">
                 <input type="text" placeholder="Texto da pergunta">
                 <input type="text" placeholder="Cor de fundo da pergunta">
@@ -73,7 +73,7 @@ function gerarInputdePerguntas(){
             <h3>Pergunta ${i}</h3>
             <button class="on" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
         </div>
-        <div class="conteudo off">
+        <div class="conteudoCriacao off">
             <div class="pergunta">
                 <input type="text" placeholder="Texto da pergunta">
                 <input type="text" placeholder="Cor de fundo da pergunta">
@@ -106,7 +106,7 @@ function gerarInputdePerguntas(){
 }
 function abreFecha(elemento){
     let divContainerAnterior = document.querySelector(".selecionado")
-    let divConteudoAnterior = divContainerAnterior.querySelector(".conteudo")
+    let divConteudoAnterior = divContainerAnterior.querySelector(".conteudoCriacao")
     divContainerAnterior.querySelector("button").classList.add("on")
     divContainerAnterior.querySelector("button").classList.remove("off")
     divConteudoAnterior.classList.remove("on") 
@@ -117,7 +117,7 @@ function abreFecha(elemento){
     divContainer.classList.add("selecionado")
     elemento.classList.remove("on")
     elemento.classList.add("off")
-    let divConteudo = divContainer.querySelector(".conteudo") 
+    let divConteudo = divContainer.querySelector(".conteudoCriacao") 
     divConteudo.classList.remove("off")
     divConteudo.classList.add("on")
 }

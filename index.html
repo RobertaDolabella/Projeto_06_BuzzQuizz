@@ -17,12 +17,12 @@
     </div>
     <div class="container-principal">
         <div class="botao-criacao">
-            <h3>Você não criou nenhum <br>quizz ainda :( </h3>
+            <h2>Você não criou nenhum <br>quizz ainda :( </h2>
             <button onclick="sumirBotao()">Criar Quizz</button>
         </div>
         <div class="container-quizzes-criacao off">
             <div class="criacao-adicionar">
-                <h2>Seus Quizzes</h2>
+                <h2 class="setor">Seus Quizzes</h2>
                 <button>
                     <ion-icon name="add-circle"></ion-icon>
                 </button>
@@ -34,7 +34,7 @@
         </div>
         <div class="container-quizzes">
             <div class="quizzes">
-                <h2>Todos os Quizzes</h2>
+                <h2 class="setor">Todos os Quizzes</h2>
                 <div class="quizzes-prontos">
 
                 </div>
@@ -57,18 +57,21 @@
                 perguntas</button>
         </div>
     </div>
+    <!--Final da tela comece pelo comeco  -->
+    <!-- inicio da tela de criaçao perguntas/ o conteudo da pagina está no java chamando, ele é ativado pela função gerarInputdePerguntas -->
     <div class="perguntas off">
         <div class="container-criacao">
             <div class="titulo-criacao">
                 <h2>Crie suas perguntas</h2>
             </div>
-            <div class="container-perguntas">
+                <div class="container-perguntas">
 
-            </div>
-
+                </div>
+            
         </div>
         <button class="botao-prosseguir" onclick="">Prosseguir pra criar níveis</button>
     </div>
+    <!-- Final da tela criação de perguntas -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="java.js"></script>
     <h1></h1>
