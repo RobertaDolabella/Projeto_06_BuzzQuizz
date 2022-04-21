@@ -139,7 +139,7 @@ h2{
 /* fim tela 1 */
 
 /*-- tela 2 conteudo quiz */
-.conteudo {
+.tela-quiz .conteudo {
     margin-top: 70px;
     display:flex;
     align-items: center;
