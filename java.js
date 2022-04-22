@@ -12,9 +12,17 @@ let respostaIncorretaCriacao3;
 let imagemIncorretaCriacao1;
 let imagemIncorretaCriacao2;
 let imagemIncorretaCriacao3;
+let tituloNivelcriacao;
+let porcentagemNivelCriacao;
+let imagemNivelCriacao;
+let descricaoNivelCriacao;
 let verificacao;
-let listaAuxAnswer = []
+let listaAuxAnswer = [];
+let listaAnswer = [];
+let listaPerguntas = [];
+let listaLevels = [];
 let contador;
+let contadorNiveis;
 // let mensagemCriacao = {
 // 	title: `${titulo}`,
 // 	image: `${imagem}`,
@@ -38,11 +46,11 @@ function prosseguirParaPerguntas() {
         return alert("É necessário preencher todos os campos!")
 
     }
-    if (isNaN(quantPerguntas) || quantPerguntas < 1) {
+    if (isNaN(quantPerguntas) || quantPerguntas < 3) {
         alert("É necessário pelo menos 3 perguntas!")
         return document.querySelector(".quantPerguntas").value = ""
     }
-    if (isNaN(quantNiveis || quantNiveis < 1)) {
+    if (isNaN(quantNiveis || quantNiveis < 2)) {
         alert("Por favor, informe a quantidade de níveis, a quantidade minma é 2")
         return document.querySelector(".quantNiveis").value = ""
     } else {
@@ -159,16 +167,24 @@ function inputdoFormulariodePerguntas() {
     imagemIncorretaCriacao2 = divPrincipal.querySelector(".imagemIncorreta2").value
     respostaIncorretaCriacao3 = divPrincipal.querySelector(".inputIncorreta3").value
     imagemIncorretaCriacao3 = divPrincipal.querySelector(".imagemIncorreta3").value
-    divPrincipal.classList.remove(".n")
     console.log("passou pelo formulario")
 }
 function verificacaodosCampos(i, contador) {
+    verificacao = ""
     console.log(contador)
-    if (perguntaCriacao== "" || perguntaCorCriacao== "") {
-        return alert('É necessário o preenchimento do completo da Pergunta'+i)
+    if (perguntaCriacao == "" || perguntaCorCriacao == "") {
+        alert('É necessário o preenchimento do completo da Pergunta' + i)
+        document.querySelectorAll(".container-pergunta").classList.remove("n")
+        document.querySelectorAll(".container-pergunta").classList.add("n")
+        textodasPerguntas()
+        return
     }
     if (contador < 1 || (respostaCorretaCriacao == "" || imagemCorretaCriacao == "")) {
-        return alert("É necessário o preenchimento dos campos referente a resposta correta e, pelo menos, uma resposta incorreta")
+        alert("É necessário o preenchimento dos campos referente a resposta correta e, pelo menos, uma resposta incorreta")
+        document.querySelectorAll(".container-pergunta").classList.remove("n")
+        document.querySelectorAll(".container-pergunta").classList.add("n")
+        textodasPerguntas()
+        return
     }
     else {
         verificacao = "ok"
@@ -176,7 +192,7 @@ function verificacaodosCampos(i, contador) {
         return verificacao
     }
 }
-function contagemderespostasIncorretas(){
+function contagemderespostasIncorretas() {
     if (respostaIncorretaCriacao1 !== "" && imagemIncorretaCriacao1 !== "") {
         contador++
         console.log("contagem de resposta part 1")
@@ -195,16 +211,16 @@ function contagemderespostasIncorretas(){
     return (contador, listaAuxAnswer)
 }
 function textodasPerguntas() {
-    let listaPerguntas= [];
-    let listaAnswer = [];
-    contador = 0
     for (let i = 1; i <= quantPerguntas; i++) {
+        contador = 0
+        listaAnswer = []
+        objetoAnswer = []
         inputdoFormulariodePerguntas()
         contagemderespostasIncorretas()
         console.log(contador)
         console.log(listaAuxAnswer)
         console.log("vai entrar na verificação")
-        verificacaodosCampos(i,contador)
+        verificacaodosCampos(i, contador)
         if (verificacao !== "ok") {
             return
         }
@@ -224,24 +240,125 @@ function textodasPerguntas() {
             listaAnswer.push(objetoAnswer)
         }
         console.log(listaAnswer)
-        listaPerguntas[i - 1] =
+        let objectListaPerguntas =
         {
             title: `${perguntaCriacao}`,
             color: `${perguntaCorCriacao}`,
-            answers: `${listaAnswer}`
+            answers: listaAnswer
         }
+        listaPerguntas.push(objectListaPerguntas)
     }
     console.log(listaPerguntas)
     let mensagemCriacao = {
         title: `${tituloCriacao}`,
         image: `${imagemCriacao}`,
-        questions: `${listaPerguntas}`,
+        questions: listaPerguntas,
         levels: ""
     }
     console.log(mensagemCriacao)
     prosseguirParaNiveis()
 }
-function prosseguirParaNiveis(){
-    console.log("entrou em prosseguir para niveis")
-    console.log("continuar daqui")
+function prosseguirParaNiveis() {
+    document.querySelector(".perguntas").classList.add("off")
+    document.querySelector(".niveis").classList.remove("off")
+    gerarInputdeNiveis()
+    document.querySelector(".selecionado").classList.remove("selecionado")
+}
+function gerarInputdeNiveis() {
+    let inputNiveis = document.querySelector(".container-niveis")
+    inputNiveis.innerHTML = `
+            <div class="container-input selecionado n">
+                <div class="sub-titulos">
+                    <h3>Nível 1</h3>
+                    <button class="off" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
+                </div>
+                <div class="conteudoCriacao">
+                    <input class="titulo-nivel-criacao" type="text" placeholder="Titulo do nível">
+                    <input class="acerto-minimo-criacao" type="text" placeholder="% de acerto mínimo">
+                    <input class="url-nivel-criacao" type="text" placeholder="URL da imagem do nível">
+                    <input class="descricao-criacao" type="text" placeholder="Descrição do nível">
+                </div>
+            </div>
+            `
+    for (let n = 2; n <=quantNiveis; n++) {
+        inputNiveis.innerHTML +=`
+            <div class="container-input n">
+                <div class="sub-titulos">
+                    <h3>Nível ${n}</h3>
+                    <button class="" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
+                </div>
+                <div class="conteudoCriacao off">
+                    <input class="titulo-nivel-criacao" type="text" placeholder="Titulo do nível">
+                    <input class="acerto-minimo-criacao" type="text" placeholder="% de acerto mínimo">
+                    <input class="url-nivel-criacao" type="text" placeholder="URL da imagem do nível">
+                    <input class="descricao-criacao" type="text" placeholder="Descrição do nível">
+                </div>
+            </div>`
+
+
+    }
+}
+function inputdoFormulariodeNiveis(){
+    let divPai = document.querySelector(".container-niveis")
+    let divPrincipal = divPai.querySelector(".container-input.n")
+    tituloNivelcriacao = divPrincipal.querySelector(".titulo-nivel-criacao").value
+    porcentagemNivelCriacao = divPrincipal.querySelector(".acerto-minimo-criacao").value
+    imagemNivelCriacao = divPrincipal.querySelector(".url-nivel-criacao").value
+    descricaoNivelCriacao = divPrincipal.querySelector(".descricao-criacao").value
+    console.log(divPrincipal)
+    divPrincipal.classList.remove("n")
+    console.log(divPrincipal)
+    console.log("passou pelo formulario de niveis")
+}
+function verificacaodosNiveis(i) {
+    if (tituloNivelcriacao == "" || porcentagemNivelCriacao == ""|| imagemNivelCriacao==""||descricaoNivelCriacao=="") {
+        return alert('É necessário o preenchimento de todos os campos' + i)
+    }
+    else {
+        verificacao = "ok"
+        console.log("passou pela verificaçao")
+        return verificacao
+    }
+}
+function textodosNiveis() {
+    let objetoNivel = [];
+    for (let i = 1; i <= quantNiveis; i++) {
+        inputdoFormulariodeNiveis()
+        console.log("vai entrar na verificação")
+        verificacaodosNiveis(i)
+        if (verificacao !== "ok") {
+            return
+        }
+        objetoNivel = {
+			title: tituloNivelcriacao,
+			image: imagemNivelCriacao,
+			text: descricaoNivelCriacao,
+			minValue: porcentagemNivelCriacao
+		}
+        
+        listaLevels.push(objetoNivel)
+    }
+    console.log(listaLevels)
+    let mensagemCriacao = {
+        title: `${tituloCriacao}`,
+        image: `${imagemCriacao}`,
+        questions: listaPerguntas,
+        levels: listaLevels
+    }
+    console.log(mensagemCriacao)
+    enviarCriacaoAPI(mensagemCriacao)
+}
+function enviarCriacaoAPI(elemento){
+    console.log(elemento)
+    let promisseEnviarCriacao = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes",elemento)
+    promisseEnviarCriacao.then(sucesso)
+    promisseEnviarCriacao.catch(falha)
+}
+function sucesso(){
+    alert("tudo certo!")
+}
+function falha(erro){
+    let codeStatus = promisseEnviarCriacao.erro.status()
+    console.log(codeStatus)
+    alert("deu errado!")
 }
