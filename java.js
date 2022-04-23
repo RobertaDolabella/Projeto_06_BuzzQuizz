@@ -30,28 +30,35 @@ let contadorNiveis;
 // 	levels: [`${listaLevels}`]
 // }
 function sumirBotao() {
-    document.querySelector(".botao-criacao").classList.add("off")
-    document.querySelector(".container-criacao").classList.remove("off")
-    document.querySelector(".container-principal").classList.add("off")
-    document.querySelector(".comece-pelo-comeco").classList.remove("off")
+    document.querySelector(".botao-criacao").classList.add("off");
+    document.querySelector(".container-criacao").classList.remove("off");
+    document.querySelector(".container-principal").classList.add("off");
+    document.querySelector(".comece-pelo-comeco").classList.remove("off");
+    console.log('iniciar quiz acionado')
 }
 
+//coleta valores criação
 function prosseguirParaPerguntas() {
     tituloCriacao = document.querySelector(".tituloCriacao").value
     console.log(tituloCriacao)
     imagemCriacao = document.querySelector(".imagemCriacao").value
     quantPerguntas = document.querySelector(".quantPerguntas").value
     quantNiveis = document.querySelector(".quantNiveis").value
+
+    //verifica campos
     if (tituloCriacao == "" || imagemCriacao == "" || quantPerguntas == "" || quantNiveis == "") {
         return alert("É necessário preencher todos os campos!")
-
     }
+
+    //verifica valores numericos dos campos e reinicia quant perguntas
     if (isNaN(quantPerguntas) || quantPerguntas < 3) {
         alert("É necessário pelo menos 3 perguntas!")
         return document.querySelector(".quantPerguntas").value = ""
     }
+
+    //verifica valores numericos dos campos e reinicia quant niveis
     if (isNaN(quantNiveis || quantNiveis < 2)) {
-        alert("Por favor, informe a quantidade de níveis, a quantidade minma é 2")
+        alert("Por favor, informe a quantidade de níveis, a quantidade mínima é 2")
         return document.querySelector(".quantNiveis").value = ""
     } else {
         document.querySelector(".comece-pelo-comeco").classList.add("off")
@@ -71,7 +78,7 @@ function gerarInputdePerguntas() {
     inputPerguntas.innerHTML = `
     <div class="container-pergunta n selecionado">
         <div class="sub-titulos">
-            <h3>Pergunta1 </h3>
+            <h3>Pergunta 1 </h3>
             <button class="off" onclick="abreFecha(this)" ><ion-icon name="create"></ion-icon></button>
         </div>
         <div class="conteudoCriacao on">
@@ -362,3 +369,6 @@ function falha(erro){
     console.log(codeStatus)
     alert("deu errado!")
 }
+
+
+//carregar dados servidor
