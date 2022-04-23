@@ -371,4 +371,46 @@ function falha(erro){
 }
 
 
+
+
+
+//variveis globais
+const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
+
 //carregar dados servidor
+function buscarQuizzes () {
+    const promise = axios.get(API);
+    promise.then(carregarMenuQuizzes)
+}
+
+
+function carregarMenuQuizzes (resposta) {
+    console.log('carregar menu quizzes')
+
+    let carregar_pagina = document.querySelector('.quizzes-prontos');
+    for (let i = 0 ; i < 6 ; i++) {
+        let codigo_id = resposta.data[i].id;
+        let imagem = resposta.data[i].image;
+        let titulo = resposta.data[i].title;
+
+        carregar_pagina.innerHTML += `
+            <div onclick="acessarQuiz(this)" class="quiz">
+                <img
+                src="${imagem}">
+            
+                <div class="filter"></div>
+                <div class="titulo">${titulo}</div>
+                <div class="codidoId">${codigo_id}</div>
+            </div>        
+        `
+    }
+}
+
+function acessarQuiz (elemento) {
+    let quiz_id = elemento.querySelector(".codidoId").innerHTML
+    console.log('funcção onclick ativada!')
+    console.log(`Tudo dando certo, código id: ${quiz_id}`);    
+}
+
+//invocação de função
+buscarQuizzes()

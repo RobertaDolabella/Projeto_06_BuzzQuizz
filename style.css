@@ -289,6 +289,10 @@ input {
     padding: 20px 20px;
 }
 
+.codidoId {
+    display: none;
+}
+
 /* fim tela 1 */
 
 /*-- tela 2 conteudo quiz */
