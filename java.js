@@ -376,7 +376,7 @@ function falha(erro){
 
 //variveis globais
 const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
-let quiz_id;
+let id_quiz;
 
 //carregar dados servidor
 function buscarQuizzes () {
@@ -466,11 +466,11 @@ function gerarPerguntasQuiz (resposta) {
                     <h1 class="resposta"> ${alternativa} </h1>
                     </ul> 
                     `
-            }
+            }             
     }   
 
     console.log(`quant perguntas: ${quantidadePerguntas}`)
-    
+
 }
 
 function carregarTelaQuiz () {
