@@ -45,12 +45,13 @@
 
             </div>
         </div>
+    </div>
         <!-- fim tela 1 quizzes API -->
 
 
         <!--tela 2 conteudo quiz -->
-        <div class="telas">TELA 02 - perguntas</div>
-        <div class="tela-quiz">
+        <div class="tela-quiz off">
+            <div class="telas">TELA 02 - perguntas</div>
             <div class="conteudo">
                 <div class="banner centralizar">
                     <img src="https://http.cat/404.jpg">
@@ -63,22 +64,22 @@
                     <!-- alternativas -->
                     <div class="alternativas">
 
-                        <ul class="opcao_1 correta">
+                        <ul onclick="respostaSelecionada(this)" class="opcao_1">
                             <img src="https://http.cat/411.jpg">
                             <h1 class="resposta">Resposta correta</h1>
                         </ul>
 
-                        <ul class="opcao_2 errada">
+                        <ul onclick="respostaSelecionada(this)" class="opcao_2">
                             <img src="https://http.cat/411.jpg">
                             <h1 class="resposta">Resposta errada</h1>
                         </ul>
 
-                        <ul class="opcao_3 errada">
+                        <ul onclick="respostaSelecionada(this)" class="opcao_3">
                             <img src="https://http.cat/411.jpg">
                             <div class="resposta">Resposta</div>
                         </ul>
 
-                        <ul class="opcao_4 errada">
+                        <ul onclick="respostaSelecionada(this)" class="opcao_4">
                             <img src="https://http.cat/411.jpg">
                             <div class="resposta">Resposta</div>
                         </ul>
@@ -86,11 +87,12 @@
                     </div>
 
                 </div>
-
+                
+                <!--
                 <div class="pergunta_2">
                     <div class="titulo-pergunta centralizar">Em qual animal Olho-Tonto Moody transfigurou Malfoy?
                     </div>
-                    <!-- alternativas -->
+
                     <div class="alternativas">
 
                         <ul class="opcao_1 correta">
@@ -120,7 +122,7 @@
                 <div class="pergunta_3">
                     <div class="titulo-pergunta centralizar">Em qual animal Olho-Tonto Moody transfigurou Malfoy?
                     </div>
-                    <!-- alternativas -->
+
                     <div class="alternativas">
 
                         <ul class="opcao_1 correta">
@@ -146,9 +148,10 @@
                     </div>
 
                 </div>
+                -->
 
                 <div class="telas">TELA 02 - fim do quiz</div>
-                <div class="resultado">
+                <div class="resultado off">
                     <h1 class="titulo-resultado centralizar">
                         <p>88% de acerto</p>: Você é praticamente um aluno de Hogwarts!
                     </h1>
@@ -165,10 +168,9 @@
 
             </div>
         </div>
-    </div>
     <!--tela comece pelo começo -->
-    <div class="telas">TELA 03 - criação de um</div>
-    <div class="comece-pelo-comeco ">
+    <div class="comece-pelo-comeco off">
+        <div class="telas">TELA 03 - criação de um</div>
         <div class="container-criacao">
             <div class="titulo-criacao">
                 <h2>Comece pelo começo</h2>
@@ -185,7 +187,7 @@
     </div>
     <!--Final da tela comece pelo comeco  -->
     <!-- inicio da tela de criaçao perguntas/ o conteudo da pagina está no java chamando, ele é ativado pela função gerarInputdePerguntas -->
-    <div class="perguntas">
+    <div class="perguntas off">
         <div class="container-criacao">
             <div class="titulo-criacao">
                 <h2>Crie suas perguntas</h2>
@@ -199,7 +201,7 @@
     </div>
     <!-- Final da tela criação de perguntas -->
     <!-- Começo da tela criação de niveis -->
-    <div class="niveis">
+    <div class="niveis off">
         <div class="container-criacao">
             <div class="titulo-criacao">
                 <h2>Agora, decida os níveis</h2>

@@ -376,6 +376,7 @@ function falha(erro){
 
 //variveis globais
 const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
+let quiz_id;
 
 //carregar dados servidor
 function buscarQuizzes () {
@@ -407,10 +408,74 @@ function carregarMenuQuizzes (resposta) {
 }
 
 function acessarQuiz (elemento) {
-    let quiz_id = elemento.querySelector(".codidoId").innerHTML
-    console.log('funcção onclick ativada!')
-    console.log(`Tudo dando certo, código id: ${quiz_id}`);    
+    //id_quiz = elemento.querySelector(".codidoId").innerHTML
+    // teste com quiz id:8097 da turma 4
+    id_quiz = 8097
+    console.log('função onclick ativada!');
+    buscarQuizSelecionado()
 }
 
+function buscarQuizSelecionado () {
+    const promise = axios.get(API + `/${id_quiz}`)
+    //const promise = axios.get(`API/${id_quiz}`);
+    promise.then(gerarQuizSelecionado)
+}
+
+function gerarQuizSelecionado (resposta) {
+    carregarTelaQuiz()
+    //coletando dados do quiz
+    let imagemBanner = resposta.data.image
+    let tituloQuiz = resposta.data.title
+    // imprime quizz no HTML
+    let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
+    gerarQuizPagina.innerHTML = 
+    `   
+        <div class="banner centralizar">
+        <img src="${imagemBanner}">
+        <div class="titulo">${tituloQuiz}</div>
+        </div>
+    `
+    gerarPerguntasQuiz(resposta)
+}
+function gerarPerguntasQuiz (resposta) {
+    let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
+    let quantidadePerguntas = (resposta.data.questions).length;
+
+    for (let i = 0 ; i < quantidadePerguntas; i++) {
+        // carregar dados pergunta
+        let tituloPergunta = resposta.data.questions[i].title;
+        let corPergunta = resposta.data.questions[i].color;
+        
+        perguntasPagina.innerHTML += `
+            <div class="pergunta_${i+1}">
+            <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
+            <div class="alternativas answer_${i+1}">
+            </div>            
+        `
+        // carregar dados alternativas
+        let alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+        let quantidadeAlternativas = (resposta.data.questions[i].answers).length;
+
+			for (let j = 0; j < quantidadeAlternativas ; j++) {
+                let alternativa = resposta.data.questions[i].answers[j].text; 
+                let imagem = resposta.data.questions[i].answers[j].image;
+
+                alternativasPagina.innerHTML += `
+                    <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
+                    <img src="${imagem}">
+                    <h1 class="resposta"> ${alternativa} </h1>
+                    </ul> 
+                    `
+            }
+    }   
+
+    console.log(`quant perguntas: ${quantidadePerguntas}`)
+    
+}
+
+function carregarTelaQuiz () {
+    document.querySelector('.container-principal').classList.add('off')
+    document.querySelector('.tela-quiz').classList.remove('off')    
+}
 //invocação de função
 buscarQuizzes()

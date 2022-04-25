@@ -336,7 +336,7 @@ input {
     color: #FFFFFF;    
 }
 
-.alternativas {
+.alternativas  {
     display: flex;
     flex-wrap: wrap;
     margin: 20px 0;
