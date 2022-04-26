@@ -684,10 +684,11 @@ function acessarQuiz(elemento) {
     
     
      for (let i = 0 ; i < resultados.length ; i++) {
+         let m =0
+         questao_selecionada = escolha_usuario.parentNode;
          if (alternativa_escolhida == resultados[i]) {
              escolha_usuario.classList.add('correta');
-             questao_selecionada = escolha_usuario.parentNode;
-             let m =1 
+             m =1 
 
          }
         }
