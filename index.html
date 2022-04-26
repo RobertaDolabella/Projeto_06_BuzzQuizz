@@ -208,18 +208,23 @@
 
                 </div>
 
+                <button class="botao-prosseguir" onclick="textodosNiveis()">Finalizar Quizz</button>
             </div>
-            <button class="botao-prosseguir" onclick="textodosNiveis()">Finalizar Quizz</button>
         </div>
         <!-- tela final da criação do quizz- tela sucesso -->
         <div class="sucesso-quizz off">
-            <h2>Seu quizz está pronto!</h2>
+            <div class="titulo-criacao">
+                <h2>Seu quizz está pronto!</h2>
+            </div>
             <div class="container-sucesso">
 
             </div>
+            <div class="botoes">
+                <button class="botao-prosseguir" onclick="buscarQuizCriacao()">Acessar Quiz</button>
+                <button class="voltar" onclick="telaInicial()">Voltar pra home</button>
+            </div>
         </div>
     </div>
-    ...
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="java.js"></script>
