@@ -677,12 +677,19 @@ function acessarQuiz(elemento) {
  
  function respostaSelecionada(escolha_usuario) {
      alternativa_escolhida = escolha_usuario.querySelector('.resposta').innerHTML
-     
+    let questao_selecionada;
+    
+    
      for (let i = 0 ; i < resultados.length ; i++) {
          if (alternativa_escolhida == resultados[i]) {
              escolha_usuario.classList.add('correta');
-             
+             questao_selecionada = escolha_usuario.parentNode;   
+
+         } else if (questao_selecionada !== resultados[i]) {
+            questao_selecionada.classList.add('errada');
+            
          }
+         
          
      }
  
