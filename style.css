@@ -84,7 +84,7 @@
 }
 .container-quizzes-criacao {
     width: 88%;
-    height: 182px;
+    height: 200px;
     margin: 0 auto;
     margin-top: 100px;
     margin-bottom: 5px;
@@ -143,6 +143,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    height: 200px;
 }
 .comece-pelo-comeco {
     display: flex;
@@ -244,6 +245,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-content: space-between;
     align-items: center;
     padding-right: 20px;
 }
@@ -350,6 +352,47 @@ input {
     left: 0;
     padding: 20px 20px;
 }
+
+
+
+.criacao .quiz {
+    margin: 0 auto;
+    position: relative;
+}
+.criacao .quiz img {
+    width: 340px;
+    height: 182px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+/*posicionar titulo em relação a imagem*/
+.criacao .quiz .filter {
+    width: 340px;
+    height: 182px;    
+    border-radius: 6px;
+    background-image: linear-gradient(0deg, rgba(0,0,0, 0.65), rgba(0, 0, 0, 0));
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.criacao .quiz .titulo{
+    font-family: roboto;
+    font-size: 19px;
+    line-height: 22px;
+    color: #ffffff;
+    width: 340px;
+    height: 182px;  
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 20px;
+}
+
+
+
+
 
 
 

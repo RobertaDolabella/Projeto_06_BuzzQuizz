@@ -32,6 +32,7 @@ let verificacaoPercentual;
 let acertoMinimo = [];
 let idCriacao;
 let listaIdCriacao = [];
+let corpoSucesso;
 // let mensagemCriacao = {
 // 	title: `${titulo}`,
 // 	image: `${imagem}`,
@@ -40,7 +41,7 @@ let listaIdCriacao = [];
 // }
 function sumirBotao() {
     document.querySelector(".botao-criacao").classList.add("off");
-    document.querySelector(".container-criacao").classList.remove("off");
+    document.querySelector(".container-quizzes-criacao").classList.remove("off");
     document.querySelector(".container-principal").classList.add("off");
     document.querySelector(".comece-pelo-comeco").classList.remove("off");
     console.log('iniciar quiz acionado')
@@ -479,19 +480,20 @@ function enviarCriacaoAPI(elemento) {
     promisseEnviarCriacao.then(sucesso)
     promisseEnviarCriacao.catch(falha)
 }
-function sucessodoQuizz(){
-    console.log("entrou no sucesso do quiz")
-    telaSucesso()
-    promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
-    promisseSucesso.then(quizzSucesso)
-}
 function sucesso(resposta) {
     console.log("sucesso! esperara o id")
     idCriacao = resposta.data.id
     listaIdCriacao.push(idCriacao)
+    console.log("O IDcRIACAO")
     console.log(idCriacao)
     sucessodoQuizz()
     alert("tudo certo!")
+}
+function sucessodoQuizz() {
+    console.log("entrou no sucesso do quiz")
+    telaSucesso()
+    promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
+    promisseSucesso.then(quizzSucesso)
 }
 function falha(erro) {
     let codeStatus = erro.status()
@@ -499,16 +501,16 @@ function falha(erro) {
     alert("deu errado!")
 }
 
-function telaSucesso(){
+function telaSucesso() {
     console.log("entrou na função telaSucesso")
     document.querySelector(".niveis").classList.add("off")
     document.querySelector(".sucesso-quizz").classList.remove("off")
 }
-function quizzSucesso(resposta){
-    let corpoSucesso = document.querySelector(".container-sucesso")
+function quizzSucesso(resposta) {
+    corpoSucesso = document.querySelector(".container-sucesso")
     let imagemSucesso = resposta.data.image
     let tituloSucesso = resposta.data.title
-    corpoSucesso.innerHTML= `
+    corpoSucesso.innerHTML = `
     <div  class="quiz">
                 <img 
                 src="${imagemSucesso}">
@@ -524,10 +526,8 @@ function buscarQuizCriacao() {
 }
 function gerarQuizCriacao(resposta) {
     carregarTelaQuizCriacao()
-    //coletando dados do quiz
     let imagemBanner = resposta.data.image
     let tituloQuiz = resposta.data.title
-    // imprime quizz no HTML
     let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
     gerarQuizPagina.innerHTML =
         `   
@@ -543,14 +543,15 @@ function carregarTelaQuizCriacao() {
     document.querySelector('.sucesso-quizz').classList.add('off')
     document.querySelector('.tela-quiz').classList.remove('off')
 }
-function telaInicial(){
+function telaInicial() {
     document.querySelector('.sucesso-quizz').classList.add('off')
     document.querySelector('.container-principal').classList.remove("off")
     let inputQuizzCriacao = document.querySelector(".criacao")
-    for(let r=0;r<listaIdCriacao.length;r++){
+    for (let r = 0; r < listaIdCriacao.length; r++) {
         promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${listaIdCriacao[r]}`)
         promisseSucesso.then(quizzSucesso)
-    inputQuizzCriacao.innerHTML += corpoSucesso.innerHTML
+        console.log(corpoSucesso.innerHTML)
+        inputQuizzCriacao.innerHTML += corpoSucesso.innerHTML
     }
 }
 
@@ -562,6 +563,7 @@ let id_quiz;
 let objeto_alternativas = [];
 let adicionar_objeto;
 let adicionar_array_respostas;
+let alternativa_texto;
 let alternativasPagina;
 
 //carregar dados servidor
@@ -601,7 +603,6 @@ function acessarQuiz(elemento) {
     buscarQuizSelecionado()
 }
 
-<<<<<<< HEAD
 // function buscarQuizSelecionado() {
 //     const promise = axios.get(API + `/${id_quiz}`)
 //     //const promise = axios.get(`API/${id_quiz}`);
@@ -609,12 +610,6 @@ function acessarQuiz(elemento) {
 //     const promise = axios.get(`${API}/${id_quiz}`);
 //     promise.then(gerarQuizSelecionado)
 // }
-=======
-function buscarQuizSelecionado () {
-    const promise = axios.get(`${API}/${id_quiz}`);
-    promise.then(gerarQuizSelecionado)
-}
->>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
 
 function gerarQuizSelecionado(resposta) {
     carregarTelaQuiz()
@@ -633,21 +628,17 @@ function gerarQuizSelecionado(resposta) {
     `
     gerarPerguntasQuiz(resposta)
 }
-<<<<<<< HEAD
 
-// function gerarPerguntasQuiz (resposta) {
+// function gerarPerguntasQuiz(resposta) {
 //     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
 //     let quantidadePerguntas = (resposta.data.questions).length;
-=======
->>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
 
-//     for (let i = 0 ; i < quantidadePerguntas; i++) {
+//     for (let i = 0; i < quantidadePerguntas; i++) {
 //         let quantidadeAlternativas = (resposta.data.questions[i].answers).length
 //         // carregar dados pergunta
 //         let tituloPergunta = resposta.data.questions[i].title;
 //         let corPergunta = resposta.data.questions[i].color;
 
-<<<<<<< HEAD
 //         perguntasPagina.innerHTML += `
 //             <div class="pergunta_${i + 1}">
 //             <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
@@ -674,82 +665,34 @@ function gerarQuizSelecionado(resposta) {
 //             let imagem = objeto_alternativas[j].image;
 
 //             // adiciona no HTML
-//             alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+//             alternativasPagina = document.querySelector(`.alternativas.answer_${ i + 1 } `);
 //             alternativasPagina.innerHTML += `
-//                     <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
+//                 < ul onclick = "respostaSelecionada(this)" class="opcao_${j+1}}" >
 //                     <img src="${imagem}">
-//                     <h1 class="resposta"> ${alternativa_texto} </h1>
-//                     </ul> 
-//                     `
+//                         <h1 class="resposta"> ${alternativa_texto} </h1>
+//                     </ul>
+//             `
 //         }
 //     }
 
-//             console.log(`loop if interno: ${j}`);
+//             console.log(`loop if interno: ${ j } `);
 //             console.log(objeto_alternativas);
 //                 }
 //                 objeto_alternativas = [];
 //         }
     
-//     console.log(`quant perguntas: ${quantidadePerguntas}`)
+//     console.log(`quant perguntas: ${ quantidadePerguntas } `)
 // }
 
 // function respostaSelecionada() {
 //     console.log('função RESPOSTA_SELECIONADA')
 // }
-=======
-    for (let i = 0 ; i < quantidadePerguntas; i++) {
-        let quantidadeAlternativas = (resposta.data.questions[i].answers).length
-        // carregar dados pergunta
-        let tituloPergunta = resposta.data.questions[i].title;
-        let corPergunta = resposta.data.questions[i].color;
 
-        perguntasPagina.innerHTML += `
-            <div class="pergunta_${i + 1}">
-            <div class="titulo-pergunta centralizar">${tituloPergunta}</div>
-            <div class="alternativas answer_${i + 1}">
-            </div>            
-        `
-        
-                for (let j = 0 ; j < quantidadeAlternativas ; j++) {
-                adicionar_array_respostas = resposta.data.questions[i].answers[j];
-                objeto_alternativas.push(adicionar_array_respostas);
-                //adiciona ordem aleatória
-                objeto_alternativas.sort(comparador);
-                }
+// function carregarTelaQuiz() {
+//     document.querySelector('.container-principal').classList.add('off')
+//     document.querySelector('.tela-quiz').classList.remove('off')
+// }
 
-                    for (let k = 0 ; k < quantidadeAlternativas ; k++) {
-                    let alternativa_texto = objeto_alternativas[k].text;
-                    let imagem = objeto_alternativas[k].image;
-                    // adiciona no HTML
-                    alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
-                    alternativasPagina.innerHTML += `
-                            <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
-                            <img src="${imagem}">
-                            <h1 class="resposta"> ${alternativa_texto} </h1>
-                            </ul> `
-                        }
-                objeto_alternativas = [];
-        }
-}
-
-function comparador() {
-    return Math.random() - 0.5;
-  }
-
-function respostaSelecionada(escolha_usuario) {
-    escolha_usuario.classList.add('resposta_selecionada');
-    //verifica se já foi selecionada
-    if (escolha_usuario.classList.contains('resposta_selecionada')) {
-        console.log('resposta já selecionada')
-
-    }
-}
->>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
-
-function carregarTelaQuiz() {
-    document.querySelector('.container-principal').classList.add('off')
-    document.querySelector('.tela-quiz').classList.remove('off')
-}
-//invocação de função
-// buscarQuizzes()
+// //invocação de função
+// // buscarQuizzes()
 
