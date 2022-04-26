@@ -380,7 +380,6 @@ let id_quiz;
 let objeto_alternativas = [];
 let adicionar_objeto;
 let adicionar_array_respostas;
-let alternativa_texto;
 let alternativasPagina;
 
 //carregar dados servidor
@@ -459,33 +458,40 @@ function gerarPerguntasQuiz (resposta) {
             </div>            
         `
             for (let j = 0 ; j < quantidadeAlternativas ; j++) {
-            // let objeto_pergunta = resposta.data.questions[i].title;
             adicionar_array_respostas = resposta.data.questions[i].answers[j];
-            
             objeto_alternativas.push(adicionar_array_respostas);
-
-            alternativa_texto = objeto_alternativas[j].text;
-            let imagem = objeto_alternativas[j].image;
-
+            //adiciona ordem aleatória
+            objeto_alternativas.sort(comparador);
+            }
+            for (let k = 0 ; k < quantidadeAlternativas ; k++) {
+            let alternativa_texto = objeto_alternativas[k].text;
+            let imagem = objeto_alternativas[k].image;
             // adiciona no HTML
             alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
             alternativasPagina.innerHTML += `
-                    <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
+                    <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
                     <img src="${imagem}">
                     <h1 class="resposta"> ${alternativa_texto} </h1>
                     </ul> 
                     `
-            console.log(`loop if interno: ${j}`);
-            console.log(objeto_alternativas);
-                }
-                objeto_alternativas = [];
+            }
+            objeto_alternativas = [];
+        }      
         }
-    
-    console.log(`quant perguntas: ${quantidadePerguntas}`)
-}
 
-function respostaSelecionada() {
-    console.log('função RESPOSTA_SELECIONADA')
+function comparador() {
+    return Math.random() - 0.5;
+  }
+
+function respostaSelecionada(escolha_usuario) {
+    escolha_usuario.classList.add('resposta_selecionada');
+    //verifica se já foi selecionada
+    if (escolha_usuario.classList.contains('resposta_selecionada')) {
+        console.log('resposta já selecionada')
+
+    }
+
+
 }
 
 function carregarTelaQuiz () {
