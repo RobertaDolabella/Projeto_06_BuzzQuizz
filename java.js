@@ -528,6 +528,11 @@ function telaInicial(){
 //variveis globais
 const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
 let id_quiz;
+let objeto_alternativas = [];
+let adicionar_objeto;
+let adicionar_array_respostas;
+let alternativa_texto;
+let alternativasPagina;
 
 //carregar dados servidor
 function buscarQuizzes() {
@@ -560,15 +565,20 @@ function carregarMenuQuizzes(resposta) {
 
 function acessarQuiz(elemento) {
     //id_quiz = elemento.querySelector(".codidoId").innerHTML
+
     // teste com quiz id:8097 da turma 4
-    id_quiz = 8097
-    console.log('função onclick ativada!');
+    id_quiz = 8097;
     buscarQuizSelecionado()
 }
 
+<<<<<<< HEAD
 function buscarQuizSelecionado() {
     const promise = axios.get(API + `/${id_quiz}`)
     //const promise = axios.get(`API/${id_quiz}`);
+=======
+function buscarQuizSelecionado () {
+    const promise = axios.get(`${API}/${id_quiz}`);
+>>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
     promise.then(gerarQuizSelecionado)
 }
 
@@ -588,11 +598,21 @@ function gerarQuizSelecionado(resposta) {
     `
     gerarPerguntasQuiz(resposta)
 }
+<<<<<<< HEAD
 function gerarPerguntasQuiz(resposta) {
     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
     let quantidadePerguntas = (resposta.data.questions).length;
 
     for (let i = 0; i < quantidadePerguntas; i++) {
+=======
+
+function gerarPerguntasQuiz (resposta) {
+    let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
+    let quantidadePerguntas = (resposta.data.questions).length;
+
+    for (let i = 0 ; i < quantidadePerguntas; i++) {
+        let quantidadeAlternativas = (resposta.data.questions[i].answers).length
+>>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
         // carregar dados pergunta
         let tituloPergunta = resposta.data.questions[i].title;
         let corPergunta = resposta.data.questions[i].color;
@@ -603,6 +623,7 @@ function gerarPerguntasQuiz(resposta) {
             <div class="alternativas answer_${i + 1}">
             </div>            
         `
+<<<<<<< HEAD
         // carregar dados alternativas
         let alternativasPagina = document.querySelector(`.alternativas.answer_${i + 1}`);
         let quantidadeAlternativas = (resposta.data.questions[i].answers).length;
@@ -613,15 +634,42 @@ function gerarPerguntasQuiz(resposta) {
 
             alternativasPagina.innerHTML += `
                     <ul onclick="respostaSelecionada(this)" class="opcao_${j + 1}}">
+=======
+            for (let j = 0 ; j < quantidadeAlternativas ; j++) {
+            // let objeto_pergunta = resposta.data.questions[i].title;
+            adicionar_array_respostas = resposta.data.questions[i].answers[j];
+            
+            objeto_alternativas.push(adicionar_array_respostas);
+
+            alternativa_texto = objeto_alternativas[j].text;
+            let imagem = objeto_alternativas[j].image;
+
+            // adiciona no HTML
+            alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+            alternativasPagina.innerHTML += `
+                    <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
+>>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
                     <img src="${imagem}">
-                    <h1 class="resposta"> ${alternativa} </h1>
+                    <h1 class="resposta"> ${alternativa_texto} </h1>
                     </ul> 
                     `
+<<<<<<< HEAD
         }
     }
 
+=======
+            console.log(`loop if interno: ${j}`);
+            console.log(objeto_alternativas);
+                }
+                objeto_alternativas = [];
+        }
+    
+>>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
     console.log(`quant perguntas: ${quantidadePerguntas}`)
+}
 
+function respostaSelecionada() {
+    console.log('função RESPOSTA_SELECIONADA')
 }
 
 function carregarTelaQuiz() {
