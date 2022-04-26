@@ -13,39 +13,39 @@
 
 <body>
     <div class="container-geral">
-    <div class="topo">
-        <h1>BuzzQuizz</h1>
-    </div>
-    <div class="container-principal">
-        <div class="telas">TELA 01</div>
-        <div class="botao-criacao">
-            <h2>Você não criou nenhum <br>quizz ainda :( </h2>
-            <button onclick="sumirBotao()">Criar Quizz</button>
+        <div class="topo">
+            <h1>BuzzQuizz</h1>
         </div>
-        <div class="container-quizzes-criacao">
-            <div class="criacao-adicionar">
-                <h2 class="setor">Seus Quizzes</h2>
-                <button>
-                    <ion-icon name="add-circle"></ion-icon>
-                </button>
+        <div class="container-principal">
+            <div class="telas">TELA 01</div>
+            <div class="botao-criacao">
+                <h2>Você não criou nenhum <br>quizz ainda :( </h2>
+                <button onclick="sumirBotao()">Criar Quizz</button>
             </div>
-            <!-- class off para esconder -->
-            <div class="criacao">
-                <!--colocar aqui os quizzes criados  -->
+            <div class="container-quizzes-criacao off">
+                <div class="criacao-adicionar">
+                    <h2 class="setor">Seus Quizzes</h2>
+                    <button>
+                        <ion-icon name="add-circle"></ion-icon>
+                    </button>
+                </div>
+                <!-- class off para esconder -->
+                <div class="criacao">
+                    <!--colocar aqui os quizzes criados  -->
+                </div>
             </div>
-        </div>
-        <div class="container-quizzes">
-            <div class="quizzes">
-                <h2 class="setor">Todos os Quizzes</h2>
-                <div class="quizzes-prontos">
-                    
+            <div class="container-quizzes">
+                <div class="quizzes">
+                    <h2 class="setor">Todos os Quizzes</h2>
+                    <div class="quizzes-prontos">
+
                         <!-- quizzes carregados da API  -->
 
-                </div>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
         <!-- fim tela 1 quizzes API -->
 
 
@@ -87,7 +87,7 @@
                     </div>
 
                 </div>
-                
+
                 <!--
                 <div class="pergunta_2">
                     <div class="titulo-pergunta centralizar">Em qual animal Olho-Tonto Moody transfigurou Malfoy?
@@ -164,58 +164,63 @@
                     </div>
 
                 </div>
-
-
             </div>
         </div>
-    <!--tela comece pelo começo -->
-    <div class="comece-pelo-comeco off">
-        <div class="telas">TELA 03 - criação de um</div>
-        <div class="container-criacao">
-            <div class="titulo-criacao">
-                <h2>Comece pelo começo</h2>
+        <!--tela comece pelo começo -->
+        <div class="comece-pelo-comeco off">
+            <div class="telas">TELA 03 - criação de um</div>
+            <div class="container-criacao">
+                <div class="titulo-criacao">
+                    <h2>Comece pelo começo</h2>
+                </div>
+                <div class="container-input">
+                    <input class="tituloCriacao" type="text" placeholder="Título do seu quizz">
+                    <input class="imagemCriacao" type="url" placeholder="URL da imagem do seu quizz">
+                    <input class="quantPerguntas" type="text" placeholder="Quantidade de perguntas do quizz">
+                    <input class="quantNiveis" type="text" placeholder="Quantidade de níveis do quizz">
+                </div>
+                <button class="botao-prosseguir" onclick="prosseguirParaPerguntas(this)">Prosseguir pra criar
+                    perguntas</button>
             </div>
-            <div class="container-input">
-                <input class="tituloCriacao" type="text" placeholder="Título do seu quizz">
-                <input class="imagemCriacao" type="text" placeholder="URL da imagem do seu quizz">
-                <input class="quantPerguntas" type="text" placeholder="Quantidade de perguntas do quizz">
-                <input class="quantNiveis" type="text" placeholder="Quantidade de níveis do quizz">
+        </div>
+        <!--Final da tela comece pelo comeco  -->
+        <!-- inicio da tela de criaçao perguntas/ o conteudo da pagina está no java chamando, ele é ativado pela função gerarInputdePerguntas -->
+        <div class="perguntas off">
+            <div class="container-criacao">
+                <div class="titulo-criacao">
+                    <h2>Crie suas perguntas</h2>
+                </div>
+                <div class="container-perguntas">
+
+                </div>
+
             </div>
-            <button class="botao-prosseguir" onclick="prosseguirParaPerguntas(this)">Prosseguir pra criar
-                perguntas</button>
+            <button class="botao-prosseguir" onclick="textodasPerguntas()">Prosseguir pra criar níveis</button>
+        </div>
+        <!-- Final da tela criação de perguntas -->
+        <!-- Começo da tela criação de niveis -->
+        <div class="niveis off">
+            <div class="container-criacao">
+                <div class="titulo-criacao">
+                    <h2>Agora, decida os níveis</h2>
+                </div>
+                <div class="container-niveis">
+
+                </div>
+
+            </div>
+            <button class="botao-prosseguir" onclick="textodosNiveis()">Finalizar Quizz</button>
+        </div>
+        <!-- tela final da criação do quizz- tela sucesso -->
+        <div class="sucesso-quizz off">
+            <h2>Seu quizz está pronto!</h2>
+            <div class="container-sucesso">
+
+            </div>
         </div>
     </div>
-    <!--Final da tela comece pelo comeco  -->
-    <!-- inicio da tela de criaçao perguntas/ o conteudo da pagina está no java chamando, ele é ativado pela função gerarInputdePerguntas -->
-    <div class="perguntas off">
-        <div class="container-criacao">
-            <div class="titulo-criacao">
-                <h2>Crie suas perguntas</h2>
-            </div>
-            <div class="container-perguntas">
-
-            </div>
-
-        </div>
-        <button class="botao-prosseguir" onclick="textodasPerguntas()">Prosseguir pra criar níveis</button>
-    </div>
-    <!-- Final da tela criação de perguntas -->
-    <!-- Começo da tela criação de niveis -->
-    <div class="niveis off">
-        <div class="container-criacao">
-            <div class="titulo-criacao">
-                <h2>Agora, decida os níveis</h2>
-            </div>
-            <div class="container-niveis">
-
-            </div>
-
-        </div>
-        <button class="botao-prosseguir" onclick="textodosNiveis()">Finalizar Quizz</button>
-    </div>
-</div>
     ...
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="java.js"></script>
     <h1></h1>

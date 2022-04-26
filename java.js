@@ -23,6 +23,14 @@ let listaPerguntas = [];
 let listaLevels = [];
 let contador;
 let contadorNiveis;
+let listaContainerPerguntas;
+let listaContainerInputNiveis;
+let i;
+let x;
+let verificacaoNiveis;
+let verificacaoPercentual;
+let acertoMinimo = []
+let idCriacao;
 // let mensagemCriacao = {
 // 	title: `${titulo}`,
 // 	image: `${imagem}`,
@@ -49,7 +57,17 @@ function prosseguirParaPerguntas() {
     if (tituloCriacao == "" || imagemCriacao == "" || quantPerguntas == "" || quantNiveis == "") {
         return alert("É necessário preencher todos os campos!")
     }
-
+    // verifica condição para o titulo
+    if (tituloCriacao.length < 20 || tituloCriacao.length > 65) {
+        return alert("Por favor, insira um titulo que tenha mais de 20 caracteres e menos que 65.")
+    }
+    // verificação da url da imagem
+    try {
+        let url = new URL(imagemCriacao)
+        console.log("Valid URL!")
+    } catch (err) {
+        return alert("URL invalida")
+    }
     //verifica valores numericos dos campos e reinicia quant perguntas
     if (isNaN(quantPerguntas) || quantPerguntas < 3) {
         alert("É necessário pelo menos 3 perguntas!")
@@ -84,7 +102,18 @@ function gerarInputdePerguntas() {
         <div class="conteudoCriacao on">
             <div class="pergunta">
             <input class="inputPergunta" type="text" placeholder="Texto da pergunta">
-            <input class="inputCor" type="text" placeholder="Cor de fundo da pergunta">
+            <input class="inputCor" type="color" placeholder="Cor de fundo da pergunta" list="colors">
+            <datalist id="colors">
+            <option value="#4169E1"/>
+            <option value="#FF1493"/>
+            <option value="#EE82EE"/>
+            <option value="#8B0000"/>
+            <option value="#FF7F50"/>
+            <option value="#00CED1"/>
+            <option value="#7FFFD4"/>
+            <option value="#228B22"/>
+            <option value="#BC8F8F"/>
+            </datalist>
         </div>
         <div class="respota-correta">
             <h3>Resposta correta</h3>
@@ -120,7 +149,18 @@ function gerarInputdePerguntas() {
         <div class="conteudoCriacao off">
             <div class="pergunta">
                 <input class="inputPergunta" type="text" placeholder="Texto da pergunta">
-                <input class="inputCor" type="text" placeholder="Cor de fundo da pergunta">
+                <input class="inputCor" type="color" placeholder="Cor de fundo da pergunta" list="colors">
+                <datalist id="colors">
+                <option value="#4169E1"/>
+                <option value="#FF1493"/>
+                <option value="#EE82EE"/>
+                <option value="#8B0000"/>
+                <option value="#FF7F50"/>
+                <option value="#00CED1"/>
+                <option value="#7FFFD4"/>
+                <option value="#228B22"/>
+                <option value="#BC8F8F"/>
+                </datalist>
             </div>
             <div class="respota-correta">
                 <h3>Resposta correta</h3>
@@ -148,6 +188,9 @@ function gerarInputdePerguntas() {
     `
 
     }
+    listaContainerPerguntas = document.querySelectorAll(".container-pergunta")
+    console.log("nodelits que estao sendo selecionados")
+    console.log(listaContainerPerguntas)
 }
 function abreFecha(elemento) {
     let divContainerAnterior = document.querySelector(".selecionado")
@@ -162,8 +205,9 @@ function abreFecha(elemento) {
     let divConteudo = divContainer.querySelector(".conteudoCriacao")
     divConteudo.classList.remove("off")
 }
+
 function inputdoFormulariodePerguntas() {
-    let divPrincipal = document.querySelector(".container-pergunta.n")
+    let divPrincipal = listaContainerPerguntas[i - 1]
     perguntaCriacao = divPrincipal.querySelector(".inputPergunta").value
     perguntaCorCriacao = divPrincipal.querySelector(".inputCor").value
     respostaCorretaCriacao = divPrincipal.querySelector(".inputCorreta").value
@@ -176,21 +220,52 @@ function inputdoFormulariodePerguntas() {
     imagemIncorretaCriacao3 = divPrincipal.querySelector(".imagemIncorreta3").value
     console.log("passou pelo formulario")
 }
-function verificacaodosCampos(i, contador) {
+function verificacaodosCampos(i) {
     verificacao = ""
+    console.log("pergunta que esta sendo verificada")
+    console.log(i)
+    console.log("contadoe da verificacao")
     console.log(contador)
-    if (perguntaCriacao == "" || perguntaCorCriacao == "") {
-        alert('É necessário o preenchimento do completo da Pergunta' + i)
-        document.querySelectorAll(".container-pergunta").classList.remove("n")
-        document.querySelectorAll(".container-pergunta").classList.add("n")
-        textodasPerguntas()
+    if (perguntaCriacao.length < 20 || perguntaCorCriacao == "") {
+        alert('É necessário o preenchimento do completo da Pergunta' + (i))
+        limparFormulario()
         return
     }
-    if (contador < 1 || (respostaCorretaCriacao == "" || imagemCorretaCriacao == "")) {
+    try {
+        let url = new URL(imagemCorretaCriacao)
+        console.log("Valid URL!")
+    } catch (err) {
+        limparFormulario()
+        return alert("URL da imagem é invalida ")
+    }
+    try {
+        let url = new URL(imagemIncorretaCriacao1)
+        console.log("Valid URL!")
+    } catch (err) {
+        limparFormulario()
+        return alert("URL da imagem 1 é invalida ")
+    }
+    if (contador > 1) {
+        try {
+            let url = new URL(imagemIncorretaCriacao2)
+            console.log("Valid URL!")
+        } catch (err) {
+            limparFormulario()
+            return alert("URL da imagem 2 é invalida ")
+        }
+    }
+    if (contador > 2) {
+        try {
+            let url = new URL(imagemIncorretaCriacao3)
+            console.log("Valid URL!")
+        } catch (err) {
+            limparFormulario()
+            return alert("URL da imagem 3 é invalida ")
+        }
+    }
+    if (contador < 1 || respostaCorretaCriacao == "") {
         alert("É necessário o preenchimento dos campos referente a resposta correta e, pelo menos, uma resposta incorreta")
-        document.querySelectorAll(".container-pergunta").classList.remove("n")
-        document.querySelectorAll(".container-pergunta").classList.add("n")
-        textodasPerguntas()
+        limparFormulario()
         return
     }
     else {
@@ -200,26 +275,35 @@ function verificacaodosCampos(i, contador) {
     }
 }
 function contagemderespostasIncorretas() {
+    contador = 0
+    console.log("inicio do contador")
+    console.log(contador)
     if (respostaIncorretaCriacao1 !== "" && imagemIncorretaCriacao1 !== "") {
-        contador++
+        contador = 1
+        console.log("contagem do contador")
+        console.log(contador)
         console.log("contagem de resposta part 1")
         console.log(contador)
         listaAuxAnswer.push(respostaIncorretaCriacao1, imagemIncorretaCriacao1)
         console.log(listaAuxAnswer)
+        if (respostaIncorretaCriacao2 !== "" && imagemIncorretaCriacao2 !== "") {
+            contador = 2
+            listaAuxAnswer.push(respostaIncorretaCriacao2, imagemIncorretaCriacao2)
+            if (respostaIncorretaCriacao3 !== "" && imagemIncorretaCriacao3 !== "") {
+                contador = 3
+                listaAuxAnswer.push(respostaIncorretaCriacao3, imagemIncorretaCriacao3)
+            }
+        }
     }
-    if (respostaIncorretaCriacao2 !== "" && imagemIncorretaCriacao2 !== "") {
-        contador++
-        listaAuxAnswer.push(respostaIncorretaCriacao2, imagemIncorretaCriacao2)
-    }
-    if (respostaIncorretaCriacao2 !== "" && imagemIncorretaCriacao2 !== "") {
-        contador++
-        listaAuxAnswer.push(respostaIncorretaCriacao3, imagemIncorretaCriacao3)
-    }
-    return (contador, listaAuxAnswer)
+    console.log("resultado final do contador")
+    console.log(contador)
+    return listaAuxAnswer
+}
+function limparFormulario() {
+    listaAuxAnswer = []
 }
 function textodasPerguntas() {
-    for (let i = 1; i <= quantPerguntas; i++) {
-        contador = 0
+    for (i = 1; i <= quantPerguntas; i++) {
         listaAnswer = []
         objetoAnswer = []
         inputdoFormulariodePerguntas()
@@ -227,7 +311,7 @@ function textodasPerguntas() {
         console.log(contador)
         console.log(listaAuxAnswer)
         console.log("vai entrar na verificação")
-        verificacaodosCampos(i, contador)
+        verificacaodosCampos(i)
         if (verificacao !== "ok") {
             return
         }
@@ -274,7 +358,7 @@ function prosseguirParaNiveis() {
 function gerarInputdeNiveis() {
     let inputNiveis = document.querySelector(".container-niveis")
     inputNiveis.innerHTML = `
-            <div class="container-input selecionado n">
+            <div class="container-input selecionado nivel">
                 <div class="sub-titulos">
                     <h3>Nível 1</h3>
                     <button class="off" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
@@ -287,9 +371,9 @@ function gerarInputdeNiveis() {
                 </div>
             </div>
             `
-    for (let n = 2; n <=quantNiveis; n++) {
-        inputNiveis.innerHTML +=`
-            <div class="container-input n">
+    for (let n = 2; n <= quantNiveis; n++) {
+        inputNiveis.innerHTML += `
+            <div class="container-input nivel">
                 <div class="sub-titulos">
                     <h3>Nível ${n}</h3>
                     <button class="" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
@@ -304,46 +388,78 @@ function gerarInputdeNiveis() {
 
 
     }
+    listaContainerInputNiveis = document.querySelectorAll(".nivel")
+    console.log('verificação da lista de nodes')
+    console.log(listaContainerInputNiveis)
 }
-function inputdoFormulariodeNiveis(){
-    let divPai = document.querySelector(".container-niveis")
-    let divPrincipal = divPai.querySelector(".container-input.n")
-    tituloNivelcriacao = divPrincipal.querySelector(".titulo-nivel-criacao").value
-    porcentagemNivelCriacao = divPrincipal.querySelector(".acerto-minimo-criacao").value
-    imagemNivelCriacao = divPrincipal.querySelector(".url-nivel-criacao").value
-    descricaoNivelCriacao = divPrincipal.querySelector(".descricao-criacao").value
-    console.log(divPrincipal)
-    divPrincipal.classList.remove("n")
-    console.log(divPrincipal)
+
+function inputdoFormulariodeNiveis(x) {
+    let divPrincipalnivel = listaContainerInputNiveis[x - 1]
+    tituloNivelcriacao = divPrincipalnivel.querySelector(".titulo-nivel-criacao").value
+    porcentagemNivelCriacao = divPrincipalnivel.querySelector(".acerto-minimo-criacao").value
+    imagemNivelCriacao = divPrincipalnivel.querySelector(".url-nivel-criacao").value
+    descricaoNivelCriacao = divPrincipalnivel.querySelector(".descricao-criacao").value
+    acertoMinimo.push(porcentagemNivelCriacao)
+    console.log(divPrincipalnivel)
     console.log("passou pelo formulario de niveis")
 }
-function verificacaodosNiveis(i) {
-    if (tituloNivelcriacao == "" || porcentagemNivelCriacao == ""|| imagemNivelCriacao==""||descricaoNivelCriacao=="") {
-        return alert('É necessário o preenchimento de todos os campos' + i)
+function verificacaodosNiveis(x) {
+    if (tituloNivelcriacao.length < 10) {
+        return alert("É necessário que o titulo tenha pelo menos 10 caracteres")
     }
-    else {
-        verificacao = "ok"
-        console.log("passou pela verificaçao")
-        return verificacao
+    if (porcentagemNivelCriacao < 0 || porcentagemNivelCriacao > 100 || isNaN(porcentagemNivelCriacao)) {
+        return alert("porcentagem de acerto invalida do nível" + x)
     }
+    if (descricaoNivelCriacao.length < 30) {
+        return alert(`É necessário que a descrição de nível${x} tenha pelo menos 30 caracteres`)
+    }
+    if (imagemNivelCriacao == "") {
+        return alert("É necessário preencher o campo de imagem do nível" + x)
+    }
+    if (imagemNivelCriacao !== "") {
+        try {
+            let url = new URL(imagemNivelCriacao)
+            console.log("Valid URL!")
+        } catch (err) {
+            return alert("URL da imagem é invalida ")
+        }
+    }
+    verificacaoNiveis = "ok"
+    console.log("passou pela verificaçao")
+    return verificacaoNiveis
+}
+function verificacaodosPercentuais() {
+    console.log(acertoMinimo)
+    for (let w = 0; w < acertoMinimo.length; w++) {
+        if (acertoMinimo[w] == 0) {
+            return verificacaoPercentual = "ok"
+        }
+    }
+    return verificacaoPercentual = "errada"
 }
 function textodosNiveis() {
     let objetoNivel = [];
-    for (let i = 1; i <= quantNiveis; i++) {
-        inputdoFormulariodeNiveis()
+    acertoMinimo = [];
+    listaLevels = []
+    for (x = 1; x <= quantNiveis; x++) {
+        inputdoFormulariodeNiveis(x)
         console.log("vai entrar na verificação")
-        verificacaodosNiveis(i)
-        if (verificacao !== "ok") {
+        verificacaodosNiveis(x)
+        if (verificacaoNiveis !== "ok") {
             return
         }
         objetoNivel = {
-			title: tituloNivelcriacao,
-			image: imagemNivelCriacao,
-			text: descricaoNivelCriacao,
-			minValue: porcentagemNivelCriacao
-		}
-        
+            title: tituloNivelcriacao,
+            image: imagemNivelCriacao,
+            text: descricaoNivelCriacao,
+            minValue: porcentagemNivelCriacao
+        }
+
         listaLevels.push(objetoNivel)
+    }
+    verificacaodosPercentuais()
+    if (verificacaoPercentual == "errada") {
+        return alert("Pelo menos um dos níveis deve ter o indice mínimo de acert de 0%")
     }
     console.log(listaLevels)
     let mensagemCriacao = {
@@ -355,22 +471,57 @@ function textodosNiveis() {
     console.log(mensagemCriacao)
     enviarCriacaoAPI(mensagemCriacao)
 }
-function enviarCriacaoAPI(elemento){
+function enviarCriacaoAPI(elemento) {
     console.log(elemento)
-    let promisseEnviarCriacao = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes",elemento)
+    let promisseEnviarCriacao = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", elemento)
     promisseEnviarCriacao.then(sucesso)
     promisseEnviarCriacao.catch(falha)
 }
-function sucesso(){
+function sucessodoQuizz(){
+    console.log("entrou no sucesso do quiz")
+    telaSucesso()
+    promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
+    promisseSucesso.then(quizzSucesso)
+}
+function sucesso(resposta) {
+    console.log("sucesso! esperara o id")
+    idCriacao = resposta.data.id
+    console.log(idCriacao)
+    sucessodoQuizz()
     alert("tudo certo!")
 }
-function falha(erro){
-    let codeStatus = promisseEnviarCriacao.erro.status()
+function falha(erro) {
+    let codeStatus = erro.status()
     console.log(codeStatus)
     alert("deu errado!")
 }
 
+function telaSucesso(){
+    console.log("entrou na função telaSucesso")
+    document.querySelector(".niveis").classList.add("off")
+    document.querySelector(".sucesso-quizz").classList.remove("off")
+}
+function quizzSucesso(resposta){
+    let corpoSucesso = document.querySelector(".container-sucesso")
+    let imagemSucesso = resposta.data.image
+    let tituloSucesso = resposta.data.title
+    corpoSucesso.innerHTML= `
+    <div  class="quiz">
+                <img
+                src="${imagemSucesso}">
+                <div class="filter"></div>
+                <div class="titulo">${tituloSucesso}</div>
+                <div class="codidoId">${idCriacao}</div>
+                <button onclick="acessarQuizCriacao(resposta)">Acessar Quiz</button>
+                <button onclick="telainicial()">Voltar pra home</button>
+                
+            </div>        
 
+        `
+}
+function telaInicial(){
+
+}
 
 
 
@@ -383,17 +534,17 @@ let adicionar_array_respostas;
 let alternativasPagina;
 
 //carregar dados servidor
-function buscarQuizzes () {
+function buscarQuizzes() {
     const promise = axios.get(API);
     promise.then(carregarMenuQuizzes)
 }
 
 
-function carregarMenuQuizzes (resposta) {
+function carregarMenuQuizzes(resposta) {
     console.log('carregar menu quizzes')
 
     let carregar_pagina = document.querySelector('.quizzes-prontos');
-    for (let i = 0 ; i < 6 ; i++) {
+    for (let i = 0; i < 6; i++) {
         let codigo_id = resposta.data[i].id;
         let imagem = resposta.data[i].image;
         let titulo = resposta.data[i].title;
@@ -411,7 +562,7 @@ function carregarMenuQuizzes (resposta) {
     }
 }
 
-function acessarQuiz (elemento) {
+function acessarQuiz(elemento) {
     //id_quiz = elemento.querySelector(".codidoId").innerHTML
 
     // teste com quiz id:8097 da turma 4
@@ -424,15 +575,15 @@ function buscarQuizSelecionado () {
     promise.then(gerarQuizSelecionado)
 }
 
-function gerarQuizSelecionado (resposta) {
+function gerarQuizSelecionado(resposta) {
     carregarTelaQuiz()
     //coletando dados do quiz
     let imagemBanner = resposta.data.image
     let tituloQuiz = resposta.data.title
     // imprime quizz no HTML
     let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
-    gerarQuizPagina.innerHTML = 
-    `   
+    gerarQuizPagina.innerHTML =
+        `   
         <div class="banner centralizar">
         <img src="${imagemBanner}">
         <div class="titulo">${tituloQuiz}</div>
@@ -450,34 +601,35 @@ function gerarPerguntasQuiz (resposta) {
         // carregar dados pergunta
         let tituloPergunta = resposta.data.questions[i].title;
         let corPergunta = resposta.data.questions[i].color;
-        
+
         perguntasPagina.innerHTML += `
-            <div class="pergunta_${i+1}">
-            <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
-            <div class="alternativas answer_${i+1}">
+            <div class="pergunta_${i + 1}">
+            <div class="titulo-pergunta centralizar">${tituloPergunta}</div>
+            <div class="alternativas answer_${i + 1}">
             </div>            
         `
-            for (let j = 0 ; j < quantidadeAlternativas ; j++) {
-            adicionar_array_respostas = resposta.data.questions[i].answers[j];
-            objeto_alternativas.push(adicionar_array_respostas);
-            //adiciona ordem aleatória
-            objeto_alternativas.sort(comparador);
-            }
-            for (let k = 0 ; k < quantidadeAlternativas ; k++) {
-            let alternativa_texto = objeto_alternativas[k].text;
-            let imagem = objeto_alternativas[k].image;
-            // adiciona no HTML
-            alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
-            alternativasPagina.innerHTML += `
-                    <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
-                    <img src="${imagem}">
-                    <h1 class="resposta"> ${alternativa_texto} </h1>
-                    </ul> 
-                    `
-            }
-            objeto_alternativas = [];
-        }      
+        
+                for (let j = 0 ; j < quantidadeAlternativas ; j++) {
+                adicionar_array_respostas = resposta.data.questions[i].answers[j];
+                objeto_alternativas.push(adicionar_array_respostas);
+                //adiciona ordem aleatória
+                objeto_alternativas.sort(comparador);
+                }
+
+                    for (let k = 0 ; k < quantidadeAlternativas ; k++) {
+                    let alternativa_texto = objeto_alternativas[k].text;
+                    let imagem = objeto_alternativas[k].image;
+                    // adiciona no HTML
+                    alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+                    alternativasPagina.innerHTML += `
+                            <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
+                            <img src="${imagem}">
+                            <h1 class="resposta"> ${alternativa_texto} </h1>
+                            </ul> `
+                        }
+                objeto_alternativas = [];
         }
+}
 
 function comparador() {
     return Math.random() - 0.5;
@@ -490,13 +642,11 @@ function respostaSelecionada(escolha_usuario) {
         console.log('resposta já selecionada')
 
     }
-
-
 }
 
-function carregarTelaQuiz () {
+function carregarTelaQuiz() {
     document.querySelector('.container-principal').classList.add('off')
-    document.querySelector('.tela-quiz').classList.remove('off')    
+    document.querySelector('.tela-quiz').classList.remove('off')
 }
 //invocação de função
 buscarQuizzes()
