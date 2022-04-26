@@ -663,6 +663,7 @@ function acessarQuiz(elemento) {
  
                      // adiciona no HTML
                      alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+                     console.log(alternativasPagina)
                      alternativasPagina.innerHTML += `
                              <ul onclick="respostaSelecionada(this)" class="opcao">
                              <img src="${imagem}">
@@ -685,17 +686,17 @@ function acessarQuiz(elemento) {
      for (let i = 0 ; i < resultados.length ; i++) {
          if (alternativa_escolhida == resultados[i]) {
              escolha_usuario.classList.add('correta');
-             questao_selecionada = escolha_usuario.parentNode;   
+             questao_selecionada = escolha_usuario.parentNode;
+             let m =1 
 
-         } else if (questao_selecionada !== resultados[i]) {
-            questao_selecionada.classList.add('errada');
-            
+         }
+        }
+         if (m!==1) {
+            questao_selecionada.classList.add('errada');   
          }
          
          
      }
- 
-     } 
  
  
  function carregarTelaQuiz() {
