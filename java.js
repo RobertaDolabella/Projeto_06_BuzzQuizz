@@ -562,7 +562,6 @@ let id_quiz;
 let objeto_alternativas = [];
 let adicionar_objeto;
 let adicionar_array_respostas;
-let alternativa_texto;
 let alternativasPagina;
 
 //carregar dados servidor
@@ -602,6 +601,7 @@ function acessarQuiz(elemento) {
     buscarQuizSelecionado()
 }
 
+<<<<<<< HEAD
 // function buscarQuizSelecionado() {
 //     const promise = axios.get(API + `/${id_quiz}`)
 //     //const promise = axios.get(`API/${id_quiz}`);
@@ -609,6 +609,12 @@ function acessarQuiz(elemento) {
 //     const promise = axios.get(`${API}/${id_quiz}`);
 //     promise.then(gerarQuizSelecionado)
 // }
+=======
+function buscarQuizSelecionado () {
+    const promise = axios.get(`${API}/${id_quiz}`);
+    promise.then(gerarQuizSelecionado)
+}
+>>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
 
 function gerarQuizSelecionado(resposta) {
     carregarTelaQuiz()
@@ -627,10 +633,13 @@ function gerarQuizSelecionado(resposta) {
     `
     gerarPerguntasQuiz(resposta)
 }
+<<<<<<< HEAD
 
 // function gerarPerguntasQuiz (resposta) {
 //     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
 //     let quantidadePerguntas = (resposta.data.questions).length;
+=======
+>>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
 
 //     for (let i = 0 ; i < quantidadePerguntas; i++) {
 //         let quantidadeAlternativas = (resposta.data.questions[i].answers).length
@@ -638,6 +647,7 @@ function gerarQuizSelecionado(resposta) {
 //         let tituloPergunta = resposta.data.questions[i].title;
 //         let corPergunta = resposta.data.questions[i].color;
 
+<<<<<<< HEAD
 //         perguntasPagina.innerHTML += `
 //             <div class="pergunta_${i + 1}">
 //             <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
@@ -686,6 +696,55 @@ function gerarQuizSelecionado(resposta) {
 // function respostaSelecionada() {
 //     console.log('função RESPOSTA_SELECIONADA')
 // }
+=======
+    for (let i = 0 ; i < quantidadePerguntas; i++) {
+        let quantidadeAlternativas = (resposta.data.questions[i].answers).length
+        // carregar dados pergunta
+        let tituloPergunta = resposta.data.questions[i].title;
+        let corPergunta = resposta.data.questions[i].color;
+
+        perguntasPagina.innerHTML += `
+            <div class="pergunta_${i + 1}">
+            <div class="titulo-pergunta centralizar">${tituloPergunta}</div>
+            <div class="alternativas answer_${i + 1}">
+            </div>            
+        `
+        
+                for (let j = 0 ; j < quantidadeAlternativas ; j++) {
+                adicionar_array_respostas = resposta.data.questions[i].answers[j];
+                objeto_alternativas.push(adicionar_array_respostas);
+                //adiciona ordem aleatória
+                objeto_alternativas.sort(comparador);
+                }
+
+                    for (let k = 0 ; k < quantidadeAlternativas ; k++) {
+                    let alternativa_texto = objeto_alternativas[k].text;
+                    let imagem = objeto_alternativas[k].image;
+                    // adiciona no HTML
+                    alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+                    alternativasPagina.innerHTML += `
+                            <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
+                            <img src="${imagem}">
+                            <h1 class="resposta"> ${alternativa_texto} </h1>
+                            </ul> `
+                        }
+                objeto_alternativas = [];
+        }
+}
+
+function comparador() {
+    return Math.random() - 0.5;
+  }
+
+function respostaSelecionada(escolha_usuario) {
+    escolha_usuario.classList.add('resposta_selecionada');
+    //verifica se já foi selecionada
+    if (escolha_usuario.classList.contains('resposta_selecionada')) {
+        console.log('resposta já selecionada')
+
+    }
+}
+>>>>>>> f5ff436639a3b262d093b022697042e2cb24232a
 
 function carregarTelaQuiz() {
     document.querySelector('.container-principal').classList.add('off')
