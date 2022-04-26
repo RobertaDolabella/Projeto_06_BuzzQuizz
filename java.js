@@ -32,6 +32,7 @@ let verificacaoPercentual;
 let acertoMinimo = [];
 let idCriacao;
 let listaIdCriacao = [];
+let corpoSucesso;
 // let mensagemCriacao = {
 // 	title: `${titulo}`,
 // 	image: `${imagem}`,
@@ -40,7 +41,7 @@ let listaIdCriacao = [];
 // }
 function sumirBotao() {
     document.querySelector(".botao-criacao").classList.add("off");
-    document.querySelector(".container-criacao").classList.remove("off");
+    document.querySelector(".container-quizzes-criacao").classList.remove("off");
     document.querySelector(".container-principal").classList.add("off");
     document.querySelector(".comece-pelo-comeco").classList.remove("off");
     console.log('iniciar quiz acionado')
@@ -479,19 +480,20 @@ function enviarCriacaoAPI(elemento) {
     promisseEnviarCriacao.then(sucesso)
     promisseEnviarCriacao.catch(falha)
 }
-function sucessodoQuizz(){
-    console.log("entrou no sucesso do quiz")
-    telaSucesso()
-    promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
-    promisseSucesso.then(quizzSucesso)
-}
 function sucesso(resposta) {
     console.log("sucesso! esperara o id")
     idCriacao = resposta.data.id
     listaIdCriacao.push(idCriacao)
+    console.log("O IDcRIACAO")
     console.log(idCriacao)
     sucessodoQuizz()
     alert("tudo certo!")
+}
+function sucessodoQuizz() {
+    console.log("entrou no sucesso do quiz")
+    telaSucesso()
+    promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
+    promisseSucesso.then(quizzSucesso)
 }
 function falha(erro) {
     let codeStatus = erro.status()
@@ -499,16 +501,16 @@ function falha(erro) {
     alert("deu errado!")
 }
 
-function telaSucesso(){
+function telaSucesso() {
     console.log("entrou na função telaSucesso")
     document.querySelector(".niveis").classList.add("off")
     document.querySelector(".sucesso-quizz").classList.remove("off")
 }
-function quizzSucesso(resposta){
-    let corpoSucesso = document.querySelector(".container-sucesso")
+function quizzSucesso(resposta) {
+    corpoSucesso = document.querySelector(".container-sucesso")
     let imagemSucesso = resposta.data.image
     let tituloSucesso = resposta.data.title
-    corpoSucesso.innerHTML= `
+    corpoSucesso.innerHTML = `
     <div  class="quiz">
                 <img 
                 src="${imagemSucesso}">
@@ -524,10 +526,8 @@ function buscarQuizCriacao() {
 }
 function gerarQuizCriacao(resposta) {
     carregarTelaQuizCriacao()
-    //coletando dados do quiz
     let imagemBanner = resposta.data.image
     let tituloQuiz = resposta.data.title
-    // imprime quizz no HTML
     let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
     gerarQuizPagina.innerHTML =
         `   
@@ -543,14 +543,15 @@ function carregarTelaQuizCriacao() {
     document.querySelector('.sucesso-quizz').classList.add('off')
     document.querySelector('.tela-quiz').classList.remove('off')
 }
-function telaInicial(){
+function telaInicial() {
     document.querySelector('.sucesso-quizz').classList.add('off')
     document.querySelector('.container-principal').classList.remove("off")
     let inputQuizzCriacao = document.querySelector(".criacao")
-    for(let r=0;r<listaIdCriacao.length;r++){
+    for (let r = 0; r < listaIdCriacao.length; r++) {
         promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${listaIdCriacao[r]}`)
         promisseSucesso.then(quizzSucesso)
-    inputQuizzCriacao.innerHTML += corpoSucesso.innerHTML
+        console.log(corpoSucesso.innerHTML)
+        inputQuizzCriacao.innerHTML += corpoSucesso.innerHTML
     }
 }
 
@@ -562,6 +563,7 @@ let id_quiz;
 let objeto_alternativas = [];
 let adicionar_objeto;
 let adicionar_array_respostas;
+let alternativa_texto;
 let alternativasPagina;
 let resultados = [];
 let quantidadePerguntas = 0;
