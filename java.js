@@ -532,6 +532,9 @@ let objeto_alternativas = [];
 let adicionar_objeto;
 let adicionar_array_respostas;
 let alternativasPagina;
+let resultados = [];
+let quantidadePerguntas = 0;
+let alternativa_escolhida;
 
 //carregar dados servidor
 function buscarQuizzes() {
@@ -563,7 +566,7 @@ function carregarMenuQuizzes(resposta) {
 }
 
 function acessarQuiz(elemento) {
-    //id_quiz = elemento.querySelector(".codidoId").innerHTML
+   // id_quiz = elemento.querySelector(".codidoId").innerHTML
 
     // teste com quiz id:8097 da turma 4
     id_quiz = 8097;
@@ -594,7 +597,7 @@ function gerarQuizSelecionado(resposta) {
 
 function gerarPerguntasQuiz (resposta) {
     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
-    let quantidadePerguntas = (resposta.data.questions).length;
+    quantidadePerguntas = (resposta.data.questions).length;
 
     for (let i = 0 ; i < quantidadePerguntas; i++) {
         let quantidadeAlternativas = (resposta.data.questions[i].answers).length
@@ -608,7 +611,6 @@ function gerarPerguntasQuiz (resposta) {
             <div class="alternativas answer_${i + 1}">
             </div>            
         `
-        
                 for (let j = 0 ; j < quantidadeAlternativas ; j++) {
                 adicionar_array_respostas = resposta.data.questions[i].answers[j];
                 objeto_alternativas.push(adicionar_array_respostas);
@@ -619,12 +621,18 @@ function gerarPerguntasQuiz (resposta) {
                     for (let k = 0 ; k < quantidadeAlternativas ; k++) {
                     let alternativa_texto = objeto_alternativas[k].text;
                     let imagem = objeto_alternativas[k].image;
+
+                    //salva alternativas corretas num array
+                    if ((objeto_alternativas[k].isCorrectAnswer) == true) {
+                        resultados.push(alternativa_texto);
+                    }
+
                     // adiciona no HTML
                     alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
                     alternativasPagina.innerHTML += `
-                            <ul onclick="respostaSelecionada(this)" class="opcao_${k+1}">
+                            <ul onclick="respostaSelecionada(this)" class="opcao">
                             <img src="${imagem}">
-                            <h1 class="resposta"> ${alternativa_texto} </h1>
+                            <h1 class="resposta">${alternativa_texto}</h1>
                             </ul> `
                         }
                 objeto_alternativas = [];
@@ -636,13 +644,18 @@ function comparador() {
   }
 
 function respostaSelecionada(escolha_usuario) {
-    escolha_usuario.classList.add('resposta_selecionada');
-    //verifica se já foi selecionada
-    if (escolha_usuario.classList.contains('resposta_selecionada')) {
-        console.log('resposta já selecionada')
-
+    alternativa_escolhida = escolha_usuario.querySelector('.resposta').innerHTML
+    
+    for (let i = 0 ; i < resultados.length ; i++) {
+        if (alternativa_escolhida == resultados[i]) {
+            escolha_usuario.classList.add('correta');
+            
+        }
+        
     }
-}
+
+    } 
+
 
 function carregarTelaQuiz() {
     document.querySelector('.container-principal').classList.add('off')

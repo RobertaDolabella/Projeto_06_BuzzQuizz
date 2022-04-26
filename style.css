@@ -311,6 +311,10 @@ input {
     display: none;
 }
 
+.resultado {
+    display: none;
+}
+
 /* fim tela 1 */
 
 /*-- tela 2 conteudo quiz */
@@ -390,18 +394,7 @@ input {
     padding: 28px 34px;
 }
 
-/* selecao de respostas */
-.alternativas .correta h1{
-    color: #009C22;
-}
 
-.alternativas .errada h1 {
-    color: #FF4B4B;
-    opacity: 30%;
-}
-.alternativas .errada {
-    opacity: 30%;   
-}
 
 /* resultado */
 .resultado {
@@ -443,4 +436,16 @@ input {
 }
 /*-- fim tela 2 conteudo quiz */
 
+/* selecao de respostas */
+.opcao.correta h1 {
+    color: #009C22;
+}
 
+.opcao.errada h1 {
+    opacity: 30%;
+    color: #FF4B4B;
+}
+
+.errada img {
+    opacity: 30%;   
+}
