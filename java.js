@@ -558,7 +558,7 @@ function telaInicial() {
 
 
 //variveis globais
-const API = 'https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes'
+const API = 'https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes'
 let id_quiz;
 let objeto_alternativas = [];
 let adicionar_objeto;
@@ -600,10 +600,7 @@ function carregarMenuQuizzes(resposta) {
 
 
 function acessarQuiz(elemento) {
-    // id_quiz = elemento.querySelector(".codidoId").innerHTML
- 
-     // teste com quiz id:8097 da turma 4
-     id_quiz = 8097;
+    id_quiz = elemento.querySelector(".codidoId").innerHTML
      buscarQuizSelecionado()
  }
  
@@ -663,7 +660,6 @@ function acessarQuiz(elemento) {
  
                      // adiciona no HTML
                      alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
-                     console.log(alternativasPagina)
                      alternativasPagina.innerHTML += `
                              <ul onclick="respostaSelecionada(this)" class="opcao">
                              <img src="${imagem}">
@@ -678,25 +674,41 @@ function acessarQuiz(elemento) {
      return Math.random() - 0.5;
    }
  
+   
  function respostaSelecionada(escolha_usuario) {
-     alternativa_escolhida = escolha_usuario.querySelector('.resposta').innerHTML
-    let questao_selecionada;
-    
-    
-     for (let i = 0 ; i < resultados.length ; i++) {
-         let m =0
-         questao_selecionada = escolha_usuario.parentNode;
-         if (alternativa_escolhida == resultados[i]) {
-             escolha_usuario.classList.add('correta');
-             m = 1 
+    alternativa_escolhida = escolha_usuario.querySelector('.resposta').innerHTML
+    let questao_selecionada = escolha_usuario.parentNode.parentNode;
 
-         }
+    console.log(questao_selecionada)
+
+    for (let j = 0 ; j < quantidadePerguntas; j++) {
+        
+        if (questao_selecionada.contains(`pergunta_${j+1}`)) {
+
+            console.log('entrou no if')
+
+            for (let i = 0 ; i < resultados.length ; i++) {
+                if (alternativa_escolhida == resultados[i]) {
+                    console.log('acertou a questao')
+                }
+            }
+            
         }
+    }
+        /*
+        for (let i = 0 ; i < resultados.length ; i++) {
+                let m =0
+                
+                if (alternativa_escolhida == resultados[i]) {
+                    escolha_usuario.classList.add('correta');
+                    m = 1 
+       
+                }
+            } 
          if (m!==1) {
             questao_selecionada.classList.add('errada');   
          }
-         
-         
+         */
      }
  
  

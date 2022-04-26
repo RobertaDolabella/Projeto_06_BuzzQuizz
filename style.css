@@ -577,11 +577,15 @@ input {
     color: #009C22;
 }
 
-.opcao.errada h1 {
+.opcao.errada {
     opacity: 30%;
     color: #FF4B4B;
 }
 
 .errada img {
     opacity: 30%;   
+}
+
+.container-principal {
+    margin-top: 110px;
 }
