@@ -29,8 +29,9 @@ let i;
 let x;
 let verificacaoNiveis;
 let verificacaoPercentual;
-let acertoMinimo = []
+let acertoMinimo = [];
 let idCriacao;
+let listaIdCriacao = [];
 // let mensagemCriacao = {
 // 	title: `${titulo}`,
 // 	image: `${imagem}`,
@@ -376,7 +377,8 @@ function gerarInputdeNiveis() {
             <div class="container-input nivel">
                 <div class="sub-titulos">
                     <h3>Nível ${n}</h3>
-                    <button class="" onclick="abreFecha(this)"><ion-icon name="create"></ion-icon></button>
+                    <button class="" onclick="abreFecha(this)">
+                    <ion-icon name="create"></ion-icon></button>
                 </div>
                 <div class="conteudoCriacao off">
                     <input class="titulo-nivel-criacao" type="text" placeholder="Titulo do nível">
@@ -486,6 +488,7 @@ function sucessodoQuizz(){
 function sucesso(resposta) {
     console.log("sucesso! esperara o id")
     idCriacao = resposta.data.id
+    listaIdCriacao.push(idCriacao)
     console.log(idCriacao)
     sucessodoQuizz()
     alert("tudo certo!")
@@ -507,20 +510,48 @@ function quizzSucesso(resposta){
     let tituloSucesso = resposta.data.title
     corpoSucesso.innerHTML= `
     <div  class="quiz">
-                <img
+                <img 
                 src="${imagemSucesso}">
                 <div class="filter"></div>
                 <div class="titulo">${tituloSucesso}</div>
                 <div class="codidoId">${idCriacao}</div>
-                <button onclick="acessarQuizCriacao(resposta)">Acessar Quiz</button>
-                <button onclick="telainicial()">Voltar pra home</button>
-                
             </div>        
-
         `
 }
+function buscarQuizCriacao() {
+    const promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${idCriacao}`)
+    promise.then(gerarQuizCriacao)
+}
+function gerarQuizCriacao(resposta) {
+    carregarTelaQuizCriacao()
+    //coletando dados do quiz
+    let imagemBanner = resposta.data.image
+    let tituloQuiz = resposta.data.title
+    // imprime quizz no HTML
+    let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
+    gerarQuizPagina.innerHTML =
+        `   
+        <div class="banner centralizar">
+        <img src="${imagemBanner}">
+        <div class="titulo">${tituloQuiz}</div>
+        </div>
+        
+    `
+    gerarPerguntasQuiz(resposta)
+}
+function carregarTelaQuizCriacao() {
+    document.querySelector('.sucesso-quizz').classList.add('off')
+    document.querySelector('.tela-quiz').classList.remove('off')
+}
 function telaInicial(){
-
+    document.querySelector('.sucesso-quizz').classList.add('off')
+    document.querySelector('.container-principal').classList.remove("off")
+    let inputQuizzCriacao = document.querySelector(".criacao")
+    for(let r=0;r<listaIdCriacao.length;r++){
+        promisseSucesso = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${listaIdCriacao[r]}`)
+        promisseSucesso.then(quizzSucesso)
+    inputQuizzCriacao.innerHTML += corpoSucesso.innerHTML
+    }
 }
 
 
@@ -571,16 +602,13 @@ function acessarQuiz(elemento) {
     buscarQuizSelecionado()
 }
 
-<<<<<<< HEAD
-function buscarQuizSelecionado() {
-    const promise = axios.get(API + `/${id_quiz}`)
-    //const promise = axios.get(`API/${id_quiz}`);
-=======
-function buscarQuizSelecionado () {
-    const promise = axios.get(`${API}/${id_quiz}`);
->>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
-    promise.then(gerarQuizSelecionado)
-}
+// function buscarQuizSelecionado() {
+//     const promise = axios.get(API + `/${id_quiz}`)
+//     //const promise = axios.get(`API/${id_quiz}`);
+// function buscarQuizSelecionado () {
+//     const promise = axios.get(`${API}/${id_quiz}`);
+//     promise.then(gerarQuizSelecionado)
+// }
 
 function gerarQuizSelecionado(resposta) {
     carregarTelaQuiz()
@@ -595,86 +623,74 @@ function gerarQuizSelecionado(resposta) {
         <img src="${imagemBanner}">
         <div class="titulo">${tituloQuiz}</div>
         </div>
+        
     `
     gerarPerguntasQuiz(resposta)
 }
-<<<<<<< HEAD
-function gerarPerguntasQuiz(resposta) {
-    let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
-    let quantidadePerguntas = (resposta.data.questions).length;
 
-    for (let i = 0; i < quantidadePerguntas; i++) {
-=======
+// function gerarPerguntasQuiz (resposta) {
+//     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
+//     let quantidadePerguntas = (resposta.data.questions).length;
 
-function gerarPerguntasQuiz (resposta) {
-    let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
-    let quantidadePerguntas = (resposta.data.questions).length;
+//     for (let i = 0 ; i < quantidadePerguntas; i++) {
+//         let quantidadeAlternativas = (resposta.data.questions[i].answers).length
+//         // carregar dados pergunta
+//         let tituloPergunta = resposta.data.questions[i].title;
+//         let corPergunta = resposta.data.questions[i].color;
 
-    for (let i = 0 ; i < quantidadePerguntas; i++) {
-        let quantidadeAlternativas = (resposta.data.questions[i].answers).length
->>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
-        // carregar dados pergunta
-        let tituloPergunta = resposta.data.questions[i].title;
-        let corPergunta = resposta.data.questions[i].color;
+//         perguntasPagina.innerHTML += `
+//             <div class="pergunta_${i + 1}">
+//             <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
+//             <div class="alternativas answer_${i + 1}">
+//             </div>            
+//         `
+//         // carregar dados alternativas
+//         let alternativasPagina = document.querySelector(`.alternativas.answer_${i + 1}`);
+//         let quantidadeAlternativas = (resposta.data.questions[i].answers).length;
 
-        perguntasPagina.innerHTML += `
-            <div class="pergunta_${i + 1}">
-            <div class="titulo-pergunta centralizar">${tituloPergunta} </div>
-            <div class="alternativas answer_${i + 1}">
-            </div>            
-        `
-<<<<<<< HEAD
-        // carregar dados alternativas
-        let alternativasPagina = document.querySelector(`.alternativas.answer_${i + 1}`);
-        let quantidadeAlternativas = (resposta.data.questions[i].answers).length;
+//         for (let j = 0; j < quantidadeAlternativas; j++) {
+//             let alternativa = resposta.data.questions[i].answers[j].text;
+//             let imagem = resposta.data.questions[i].answers[j].image;
 
-        for (let j = 0; j < quantidadeAlternativas; j++) {
-            let alternativa = resposta.data.questions[i].answers[j].text;
-            let imagem = resposta.data.questions[i].answers[j].image;
-
-            alternativasPagina.innerHTML += `
-                    <ul onclick="respostaSelecionada(this)" class="opcao_${j + 1}}">
-=======
-            for (let j = 0 ; j < quantidadeAlternativas ; j++) {
-            // let objeto_pergunta = resposta.data.questions[i].title;
-            adicionar_array_respostas = resposta.data.questions[i].answers[j];
+//             alternativasPagina.innerHTML += `
+//                     <ul onclick="respostaSelecionada(this)" class="opcao_${j + 1}}">
+//             for (let j = 0 ; j < quantidadeAlternativas ; j++) {
+//             // let objeto_pergunta = resposta.data.questions[i].title;
+//             adicionar_array_respostas = resposta.data.questions[i].answers[j];
             
-            objeto_alternativas.push(adicionar_array_respostas);
+//             objeto_alternativas.push(adicionar_array_respostas);
 
-            alternativa_texto = objeto_alternativas[j].text;
-            let imagem = objeto_alternativas[j].image;
+//             alternativa_texto = objeto_alternativas[j].text;
+//             let imagem = objeto_alternativas[j].image;
 
-            // adiciona no HTML
-            alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
-            alternativasPagina.innerHTML += `
-                    <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
->>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
-                    <img src="${imagem}">
-                    <h1 class="resposta"> ${alternativa_texto} </h1>
-                    </ul> 
-                    `
-<<<<<<< HEAD
-        }
-    }
+//             // adiciona no HTML
+//             alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+//             alternativasPagina.innerHTML += `
+//                     <ul onclick="respostaSelecionada(this)" class="opcao_${j+1}}">
+//                     <img src="${imagem}">
+//                     <h1 class="resposta"> ${alternativa_texto} </h1>
+//                     </ul> 
+//                     `
+//         }
+//     }
 
-=======
-            console.log(`loop if interno: ${j}`);
-            console.log(objeto_alternativas);
-                }
-                objeto_alternativas = [];
-        }
+//             console.log(`loop if interno: ${j}`);
+//             console.log(objeto_alternativas);
+//                 }
+//                 objeto_alternativas = [];
+//         }
     
->>>>>>> 39efc975e7e1e62783bb013d6af883ed58e06d86
-    console.log(`quant perguntas: ${quantidadePerguntas}`)
-}
+//     console.log(`quant perguntas: ${quantidadePerguntas}`)
+// }
 
-function respostaSelecionada() {
-    console.log('função RESPOSTA_SELECIONADA')
-}
+// function respostaSelecionada() {
+//     console.log('função RESPOSTA_SELECIONADA')
+// }
 
 function carregarTelaQuiz() {
     document.querySelector('.container-principal').classList.add('off')
     document.querySelector('.tela-quiz').classList.remove('off')
 }
 //invocação de função
-buscarQuizzes()
+// buscarQuizzes()
+
