@@ -688,7 +688,7 @@ function acessarQuiz(elemento) {
          questao_selecionada = escolha_usuario.parentNode;
          if (alternativa_escolhida == resultados[i]) {
              escolha_usuario.classList.add('correta');
-             m =1 
+             m = 1 
 
          }
         }
