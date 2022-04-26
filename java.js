@@ -565,6 +565,9 @@ let adicionar_objeto;
 let adicionar_array_respostas;
 let alternativa_texto;
 let alternativasPagina;
+let resultados = [];
+let quantidadePerguntas = 0;
+let alternativa_escolhida;
 
 //carregar dados servidor
 function buscarQuizzes() {
@@ -595,7 +598,9 @@ function carregarMenuQuizzes(resposta) {
     }
 }
 
+
 function acessarQuiz(elemento) {
+<<<<<<< HEAD
     //id_quiz = elemento.querySelector(".codidoId").innerHTML
 
     // teste com quiz id:8097 da turma 4
@@ -696,3 +701,102 @@ function gerarQuizSelecionado(resposta) {
 // //invocação de função
 // // buscarQuizzes()
 
+=======
+    // id_quiz = elemento.querySelector(".codidoId").innerHTML
+ 
+     // teste com quiz id:8097 da turma 4
+     id_quiz = 8097;
+     buscarQuizSelecionado()
+ }
+ 
+ function buscarQuizSelecionado () {
+     const promise = axios.get(`${API}/${id_quiz}`);
+     promise.then(gerarQuizSelecionado)
+ }
+ 
+ function gerarQuizSelecionado(resposta) {
+     carregarTelaQuiz()
+     //coletando dados do quiz
+     let imagemBanner = resposta.data.image
+     let tituloQuiz = resposta.data.title
+     // imprime quizz no HTML
+     let gerarQuizPagina = document.querySelector('.tela-quiz').querySelector('.conteudo')
+     gerarQuizPagina.innerHTML =
+         `   
+         <div class="banner centralizar">
+         <img src="${imagemBanner}">
+         <div class="titulo">${tituloQuiz}</div>
+         </div>
+     `
+     gerarPerguntasQuiz(resposta)
+ }
+ 
+ function gerarPerguntasQuiz (resposta) {
+     let perguntasPagina = document.querySelector('.tela-quiz').querySelector('.conteudo');
+     quantidadePerguntas = (resposta.data.questions).length;
+ 
+     for (let i = 0 ; i < quantidadePerguntas; i++) {
+         let quantidadeAlternativas = (resposta.data.questions[i].answers).length
+         // carregar dados pergunta
+         let tituloPergunta = resposta.data.questions[i].title;
+         let corPergunta = resposta.data.questions[i].color;
+ 
+         perguntasPagina.innerHTML += `
+             <div class="pergunta_${i + 1}">
+             <div class="titulo-pergunta centralizar">${tituloPergunta}</div>
+             <div class="alternativas answer_${i + 1}">
+             </div>            
+         `
+                 for (let j = 0 ; j < quantidadeAlternativas ; j++) {
+                 adicionar_array_respostas = resposta.data.questions[i].answers[j];
+                 objeto_alternativas.push(adicionar_array_respostas);
+                 //adiciona ordem aleatória
+                 objeto_alternativas.sort(comparador);
+                 }
+ 
+                     for (let k = 0 ; k < quantidadeAlternativas ; k++) {
+                     let alternativa_texto = objeto_alternativas[k].text;
+                     let imagem = objeto_alternativas[k].image;
+ 
+                     //salva alternativas corretas num array
+                     if ((objeto_alternativas[k].isCorrectAnswer) == true) {
+                         resultados.push(alternativa_texto);
+                     }
+ 
+                     // adiciona no HTML
+                     alternativasPagina = document.querySelector(`.alternativas.answer_${i+1}`);
+                     alternativasPagina.innerHTML += `
+                             <ul onclick="respostaSelecionada(this)" class="opcao">
+                             <img src="${imagem}">
+                             <h1 class="resposta">${alternativa_texto}</h1>
+                             </ul> `
+                         }
+                 objeto_alternativas = [];
+         }
+ }
+ 
+ function comparador() {
+     return Math.random() - 0.5;
+   }
+ 
+ function respostaSelecionada(escolha_usuario) {
+     alternativa_escolhida = escolha_usuario.querySelector('.resposta').innerHTML
+     
+     for (let i = 0 ; i < resultados.length ; i++) {
+         if (alternativa_escolhida == resultados[i]) {
+             escolha_usuario.classList.add('correta');
+             
+         }
+         
+     }
+ 
+     } 
+ 
+ 
+ function carregarTelaQuiz() {
+     document.querySelector('.container-principal').classList.add('off')
+     document.querySelector('.tela-quiz').classList.remove('off')
+ }
+ //invocação de função
+ buscarQuizzes()
+>>>>>>> ccc2aebfb07b966753bba69ec76fa67ac409188d
